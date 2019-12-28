@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#register_user").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 3,
+                    validAlpha: true,
+                    max50: true
+                },
+                emailaddress: {
+                    required: true,
+                    minlength: 3,
+                    max50: true
+                },
+                contactnumber: {
+                    required: true,
+                    minlength: 9,
+                    validNo: true,
+                    max15: true
+                },
+                address_line:
+                {
+                    required: true,
+                    minlength: 10,
+                    max60: true
+                },
+                address_line2:
+                {
+                    optionalmax30: true
+                },
+                city: {
+                    required: true,
+                    minlength: 5,
+                    validAlpha: true,
+                    max20: true
+                },
+                state: {
+                    required: true,
+                },
+                country: {
+                    required: true,
+                    minlength: 3,
+                    validAlpha: true,
+                    max20: true
+                }
+            },
+            submitHandler: function (form) {
+                var prizeWon = 0;
+                var json = {
+                    'Name': random_visitor_id,
+                    'EmailAddress': form.fullname.value,
+                    'ContactNumber': form.ic_number.value,
+                    'AddressLine': form.address_line.value + ", " + form.address_line2.value + ", " + form.city.value + ", " + form.state.value + ", " + form.country.value,
+                    'PrizeWon': prizeWon
+                };
+                $.ajax({
+                    url: '@Url.Action("CreateUserAndDraw", "Home")',
+                    method: 'POST',
+                    data: JSON.stringify(json),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    processData: false,
+                    success: function (data) {
+                        alert(data.message);
+                    },
+                    error: function (data) {
+                         alert(data.message);
+                    }
+                });
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+                error.insertAfter(element);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-sm-8").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-sm-8").addClass("has-success").removeClass("has-error");
+            },
+        });
+    });
+    jQuery.validator.addMethod("validNo", function (value, element) {
+        return !(isNaN(value));
+    }, "This field must be only contain numerical characters");
+    jQuery.validator.addMethod("validAlpha", function (value, element) {
+        return (isNaN(value));
+    }, "This field must be only contain alphabetical characters");
+    jQuery.validator.addMethod("max50", function (value, element) {
+        return value.length < 50;
+    }, "This field must be less than 50 characters");
+    jQuery.validator.addMethod("max30", function (value, element) {
+        return value.length < 30;
+    }, "This field must be less than 30 characters");
+    jQuery.validator.addMethod("max60", function (value, element) {
+        return value.length < 60;
+    }, "This field must be less than 60 characters");
+    jQuery.validator.addMethod("optionalmax30", function (value, element) {
+        return this.optional(element) || value.length < 30;
+    }, "This field must be less than 30 characters");
+    jQuery.validator.addMethod("max20", function (value, element) {
+        return value.length < 20;
+    }, "This field must be less than 20 characters");
+    jQuery.validator.addMethod("max10", function (value, element) {
+        return value.length < 10;
+    }, "This field must be less than 10 characters");
+     jQuery.validator.addMethod("max15", function (value, element) {
+        return value.length < 15;
+    }, "This field must be less than 15 characters");
+
+</script>

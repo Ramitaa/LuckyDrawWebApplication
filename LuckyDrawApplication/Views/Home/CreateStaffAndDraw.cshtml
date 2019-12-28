@@ -1,0 +1,311 @@
+﻿@model LuckyDrawApplication.Models.User
+
+@{
+    ViewBag.Title = "View";
+}
+
+<style>
+    .form-rounded {
+        border-radius: 5rem;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        padding: 20px;
+        margin: auto;
+    }
+
+    input,
+    select,
+    textarea {
+        max-width: 500px;
+    }
+
+    .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+        color: #ff0000;
+        text-align: end;
+        border-color: #ff0000;
+    }
+
+    .has-error .form-control {
+        border-color: #ff0000;
+    }
+
+        .has-error .form-control:focus {
+            border-color: #ff0000;
+        }
+
+    .has-success .form-control {
+        border-color: #00d91d;
+    }
+
+        .has-success .form-control:focus {
+            border-color: #00d91d;
+        }
+
+    .btn-1 {
+        flex: 1 1 auto;
+        padding: 10px;
+        text-align: center;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;
+        /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+        box-shadow: 0 0 20px #eee;
+        border-radius: 5em;
+        width: 100%;
+        max-width: 550px;
+        font-weight: bold;
+    }
+
+    .btn-1:hover {
+        background-position: right center; /* change the direction of the change here */
+    }
+
+    .btn-1 {
+        background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+    }
+
+    .btn-2 {
+        background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+        max-width: 150px;
+    }
+</style>
+
+<!-- User Registration Form -->
+<form id="register_user" method="post" class="form-horizontal" action="" style="text-align:center;">
+
+    <h4 style="margin-top: 100px; font-weight:bold">Register A New Purchaser and Try Lucky Draw Now!</h4>
+
+    <div class="row text-center" style="margin-top: 25px;">
+
+        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-offset-1 col-offset-xs-0 col-xs-12 col-sm-10">
+
+            <!-- Full Name -->
+            <div class="form-group text-center center-block">
+                <label class="col-md-3" for="name" style="text-align:left;padding: 10px;">Name</label>
+                <div class="col-md-9" style="margin:auto;">
+                    <input type="text" class="form-control form-rounded" id="name" name="name" placeholder="" />
+                </div>
+            </div>
+
+            <!-- IC Number -->
+            <div class="form-group">
+                <label class="col-md-3" for="ic_number" style="text-align:left;padding: 10px;">IC No</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="ic_number" name="ic_number" placeholder="Eg. 7802053550786" />
+                </div>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+                <label class="col-md-3" for="emailaddress" style="text-align:left;padding: 10px;">Email</label>
+                <div class="col-md-9">
+                    <input type="email" class="form-control form-rounded" id="emailaddress" name="emailaddress" placeholder="Eg. ram@gmail.com" />
+                </div>
+            </div>
+
+            <!-- Contact Number -->
+            <div class="form-group">
+                <label class="col-md-3" for="contactnumber" style="text-align:left;padding: 10px;">Contact No</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="contactnumber" name="contactnumber" placeholder="Eg. 0166176814" />
+                </div>
+            </div>
+
+            <!-- Project -->
+            <div class="form-group">
+                <label class="col-md-3" for="project" style="text-align:left;padding: 10px;">Project</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="project" name="project" placeholder="" />
+                </div>
+            </div>
+
+            <!-- Unit -->
+            <div class="form-group">
+                <label class="col-md-3" for="unit" style="text-align:left;padding: 10px;">Unit</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="unit" name="unit" placeholder="Eg. 18-1-4" />
+                </div>
+            </div>
+
+            <!-- Sales Consultant -->
+            <div class="form-group">
+                <label class="col-md-3" for="salesconsultant" style="text-align:left;padding: 10px;">Sales Consultant</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="salesconsultant" name="salesconsultant" placeholder="" />
+                </div>
+            </div>
+
+            <!-- Sales Location -->
+            <div class="form-group">
+                <label class="col-md-3" for="saleslocation" style="text-align:left;padding: 10px;">Sales Location</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="saleslocation" name="saleslocation" placeholder="" />
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row text-center" style="margin-top:25px">
+        <button type="submit" class="btn btn-1" name="register" value="Register and Draw">Register and Try My Luck</button>
+    </div>
+
+</form>
+
+<!-- Modal Class for Registration Response-->
+<div id="registrationModal" class="modal modal-default fade">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body" id="registration_output"></div>
+                <button type="button" class="btn btn-2" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#register_user").validate({
+            rules: {
+                name: {
+                    required: true,
+                    validAlpha: true,
+                    minlength: 3,
+                    max50: true
+                },
+                ic_number: {
+                    required: true,
+                    validNo: true,
+                    validIC: true
+                },
+                emailaddress: {
+                    required: true,
+                    minlength: 3,
+                    max50: true
+                },
+                contactnumber: {
+                    required: true,
+                    validNo: true,
+                    minlength: 9,
+                    max15: true
+                },
+                project:
+                {
+                    required: true,
+                    minlength: 3,
+                    max50: true
+                },
+                unit:
+                {
+                    required: true,
+                    minlength: 3,
+                    max50: true
+                },
+                salesconsultant: {
+                    required: true,
+                    validAlpha: true,
+                    minlength: 3,
+                    max50: true
+                },
+                saleslocation: {
+                   required: true,
+                   minlength: 3,
+                   max50: true
+                }
+            },
+            submitHandler: function (form) {
+                var prizeWon = 0;
+                var json = {
+                    'Name': form.name.value,
+                    'ICNumber': form.ic_number.value,
+                    'EmailAddress': form.emailaddress.value,
+                    'ContactNumber': form.contactnumber.value,
+                    'Project': form.project.value,
+                    'Unit': form.unit.value,
+                    'SalesConsultant': form.salesconsultant.value,
+                    'SalesLocation': form.saleslocation.value,
+                    'PrizeWon': prizeWon
+                };
+                $.ajax({
+                    url: '@Url.Action("CreateUserAndDraw", "Home")',
+                    method: 'POST',
+                    data: JSON.stringify(json),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    processData: false,
+                    success: function (data) {
+
+                        var mymodal = $('#registrationModal');
+                        var prize = "";
+                        if (data.draw == 1)
+                            prize = "big!";
+                        else if (data.draw == 2)
+                            prize = "medium.";
+                        else if (data.draw == 3)
+                            prize = "small..";
+                        else
+                            prize = "nothing :(";
+
+                        mymodal.find('.modal-body').text(data.message + prize);
+                        mymodal.modal('show');
+                        $('#register_user')[0].reset();
+
+                    },
+                    error: function (data) {
+
+                       var mymodal = $('#registrationModal');
+                       mymodal.find('.modal-body').text(data.message);
+                       mymodal.modal('show');
+
+                    }
+                });
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+                error.insertAfter(element);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-md-9").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-md-9").addClass("has-success").removeClass("has-error");
+            },
+        });
+
+        jQuery.validator.addMethod("validIC", function (value, element) {
+        return value.length == 12;
+        }, "This field must be exactly 12 characters long");
+
+        jQuery.validator.addMethod("max50", function (value, element) {
+            return value.length < 50;
+        }, "This field must be less than 50 characters");
+
+        jQuery.validator.addMethod("max15", function (value, element) {
+            return value.length < 15;
+        }, "This field must be less than 15 characters");
+
+        jQuery.validator.addMethod("validNo", function (value, element) {
+        return !(isNaN(value));
+        }, "This field must be only contain numerical characters");
+
+        jQuery.validator.addMethod("validAlpha", function (value, element) {
+            return (isNaN(value));
+        }, "This field must be only contain alphabetical characters");
+
+    });
+
+</script>

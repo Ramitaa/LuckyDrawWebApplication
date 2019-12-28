@@ -1,0 +1,309 @@
+﻿@model LuckyDrawApplication.Models.User
+
+@{
+    ViewBag.Title = "Modify";
+}
+
+<style>
+    .form-rounded {
+        border-radius: 5rem;
+        margin-top: 1px;
+        margin-bottom: 1px;
+        padding: 18px;
+        margin: auto;
+    }
+
+    input,
+    select,
+    textarea {
+        max-width: 500px;
+    }
+
+    .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+        color: #ff0000;
+        text-align: end;
+        border-color: #ff0000;
+    }
+
+    .has-error .form-control {
+        border-color: #ff0000;
+    }
+
+    .has-error .form-control:focus {
+        border-color: #ff0000;
+    }
+
+    .has-success .form-control {
+        border-color: #00d91d;
+    }
+
+    .has-success .form-control:focus {
+        border-color: #00d91d;
+    }
+
+    .btn-1 {
+        flex: 1 1 auto;
+        padding: 10px;
+        text-align: center;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;
+        /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+        box-shadow: 0 0 20px #eee;
+        border-radius: 5em;
+        width: 100%;
+        max-width: 550px;
+        font-weight: bold;
+    }
+
+    .btn-1:hover {
+        background-position: right center; /* change the direction of the change here */
+    }
+
+    .btn-1 {
+        background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+    }
+
+    .btn-2 {
+        background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+        max-width: 150px;
+    }
+</style>
+
+<!-- User Modification Form -->
+<form id="modify_user" method="post" class="form-horizontal" action="" style="text-align:center;">
+
+    <h4 style="margin-top: 50px; font-weight:bold">Modify Details of Purchaser ID #@Html.DisplayFor(model => model.UserID)</h4>
+
+    <div class="row text-center" style="margin-top: 20px;">
+
+        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-offset-1 col-offset-xs-0 col-xs-12 col-sm-10">
+
+            <!-- Full Name -->
+            <div class="form-group text-center center-block">
+                <label class="col-md-3" for="name" style="text-align:left;padding: 10px;">Name</label>
+                <div class="col-md-9" style="margin:auto;">
+                    <input type="text" class="form-control form-rounded" id="name" name="name" value="@Model.Name" />
+                </div>
+            </div>
+
+            <!-- IC Number -->
+            <div class="form-group">
+                <label class="col-md-3" for="ic_number" style="text-align:left;padding: 10px;">IC No</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="ic_number" name="ic_number" value="@Model.ICNumber" />
+                </div>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+                <label class="col-md-3" for="emailaddress" style="text-align:left;padding: 10px;">Email</label>
+                <div class="col-md-9">
+                    <input type="email" class="form-control form-rounded" id="emailaddress" name="emailaddress" value="@Model.EmailAddress" />
+                </div>
+            </div>
+
+            <!-- Contact Number -->
+            <div class="form-group">
+                <label class="col-md-3" for="contactnumber" style="text-align:left;padding: 10px;">Contact No</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="contactnumber" name="contactnumber" value="@Model.ContactNumber" />
+                </div>
+            </div>
+
+            <!-- Project -->
+            <div class="form-group">
+                <label class="col-md-3" for="project" style="text-align:left;padding: 10px;">Project</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="project" name="project" value="@Model.Project" />
+                </div>
+            </div>
+
+            <!-- Unit -->
+            <div class="form-group">
+                <label class="col-md-3" for="unit" style="text-align:left;padding: 10px;">Unit</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="unit" name="unit" value="@Model.Unit" />
+                </div>
+            </div>
+
+            <!-- Sales Consultant -->
+            <div class="form-group">
+                <label class="col-md-3" for="salesconsultant" style="text-align:left;padding: 10px;">Sales Consultant</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="salesconsultant" name="salesconsultant" value="@Model.SalesConsultant" />
+                </div>
+            </div>
+
+            <!-- Sales Location -->
+            <div class="form-group">
+                <label class="col-md-3" for="saleslocation" style="text-align:left;padding: 10px;">Sales Location</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" id="saleslocation" name="saleslocation" value="@Model.SalesLocation" />
+                </div>
+            </div>
+
+            <!-- DateTime -->
+            <div class="form-group">
+                <label class="col-md-3" for="datetime" style="text-align:left;padding: 10px;">DateTime</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control form-rounded" readonly id="datetime" name="datetime" value="@Model.DateTime" />
+                </div>
+            </div>
+
+            <!-- Prize Won -->
+            <div class="form-group">
+                <label class="col-md-3" for="prizewon" style="text-align:left;padding: 10px;">PrizeWon</label>
+                <div class="col-md-9">
+                    @if (Model.PrizeWon == 1)
+                    {
+                        <input type="text" class="form-control form-rounded" readonly id="prizewon" name="prizewon" value="RM 8888.00" style="color:#64b300;font-weight:bold" />
+                    }
+                    else if (Model.PrizeWon == 2)
+                    {
+                        <input type="text" class="form-control form-rounded" readonly id="prizewon" name="prizewon" value="RM 500.00" style="color:#72cc00;font-weight:bold" />
+                    }
+                    else if (Model.PrizeWon == 3)
+                    {
+                        <input type="text" class="form-control form-rounded" readonly id="prizewon" name="prizewon" value="RM 200.00" style="color:#80e600;font-weight:bold" />
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control form-rounded" readonly id="prizewon" name="prizewon" value="RM 0.00" style="color:#ff0000;font-weight:bold;" />
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row text-center" style="margin-top:15px">
+        <button type="submit" class="btn btn-1" name="register" value="Modify Purchaser">Modify</button>
+    </div>
+
+</form>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#modify_user").validate({
+            rules: {
+                name: {
+                    required: true,
+                    validAlpha: true,
+                    minlength: 3,
+                    max50: true
+                },
+                ic_number: {
+                    required: true,
+                    validNo: true,
+                    validIC: true
+                },
+                emailaddress: {
+                    required: true,
+                    minlength: 3,
+                    max50: true
+                },
+                contactnumber: {
+                    required: true,
+                    validNo: true,
+                    minlength: 9,
+                    max15: true
+                },
+                project:
+                {
+                    required: true,
+                    minlength: 3,
+                    max50: true
+                },
+                unit:
+                {
+                    required: true,
+                    minlength: 3,
+                    max50: true
+                },
+                salesconsultant: {
+                    required: true,
+                    validAlpha: true,
+                    minlength: 3,
+                    max50: true
+                },
+                saleslocation: {
+                   required: true,
+                   minlength: 3,
+                   max50: true
+                }
+            },
+            submitHandler: function (form) {
+                var json = {
+                    'UserID': @Model.UserID,
+                    'Name': form.name.value,
+                    'ICNumber': form.ic_number.value,
+                    'EmailAddress': form.emailaddress.value,
+                    'ContactNumber': form.contactnumber.value,
+                    'Project': form.project.value,
+                    'Unit': form.unit.value,
+                    'SalesConsultant': form.salesconsultant.value,
+                    'SalesLocation': form.saleslocation.value
+                };
+                $.ajax({
+                    url: '@Url.Action("ModifyUser", "Home")',
+                    method: 'POST',
+                    data: JSON.stringify(json),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    processData: false,
+                    success: function (data) {
+                       window.location = data.url;
+                    },
+                    error: function (data) {
+                         alert(data.message);
+                    }
+                });
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+                error.insertAfter(element);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-md-9").addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-md-9").addClass("has-success").removeClass("has-error");
+            },
+        });
+
+        jQuery.validator.addMethod("validIC", function (value, element) {
+        return value.length == 12;
+        }, "This field must be exactly 12 characters long");
+
+        jQuery.validator.addMethod("max50", function (value, element) {
+            return value.length < 50;
+        }, "This field must be less than 50 characters");
+
+        jQuery.validator.addMethod("max15", function (value, element) {
+            return value.length < 15;
+        }, "This field must be less than 15 characters");
+
+        jQuery.validator.addMethod("validNo", function (value, element) {
+        return !(isNaN(value));
+        }, "This field must be only contain numerical characters");
+
+        jQuery.validator.addMethod("validAlpha", function (value, element) {
+            return (isNaN(value));
+        }, "This field must be only contain alphabetical characters");
+
+    });
+
+</script>
