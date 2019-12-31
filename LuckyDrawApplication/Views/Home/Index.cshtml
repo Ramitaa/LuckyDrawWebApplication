@@ -10,7 +10,7 @@
 </style>
 
 @{
-    ViewBag.Title = "Create New Payment";
+    ViewBag.Title = "Dashboard";
 }
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
@@ -25,11 +25,9 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Create New Payment</h1>
+            <h1 style="margin: 20px;">Dashboard</h1>
             <ol class="breadcrumb">
-                <li><a href="~/AMS/Admin/Home"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li>Payment</li>
-                <li class="active">Create New Payment</li>
+                <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
             </ol>
 
         </section>
@@ -37,34 +35,52 @@
         <!-- Main content -->
         <section class="content">
 
-            <!-- Default box -->
-            <div class="box box-success">
-
-                <div id="error_message_box" class="callout callout-danger" style="visibility:hidden; padding:5px;">
-                    <h4>An error has occured!</h4>
-
-                    <p id="error"></p>
-                </div>
-
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-horizontal">
-
-                        <div class="box-header">
-                            <div class="col-sm-12" id="results_label">
-                                <p id="result" style="text-align:center;"></p>
-                            </div>
+            <div class="col-md-4">
+                <!-- Widget: user widget style 1 -->
+                <div class="box box-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-yellow">
+                        <div class="widget-user-image">
+                            <img class="img-circle" src="~/admin-lte/img/mortgage.png" alt="Purchasers No">
                         </div>
-
-                        <div class="box-body">
-
-
-
-                        </div>
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">No of Purchasers</h3>
+                        <h5 class="widget-user-desc">Total Number of Purchasers based on Project</h5>
                     </div>
-                }
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-stacked">
+                            @foreach (var item in ViewBag.PurchasersList)
+                            {
+                                <li><a href="#">@item.ProjectName <span class="pull-right badge bg-blue">@item.NoOfProjects</span></a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.widget-user -->
+            </div>
+
+            <div class="col-md-4">
+                <!-- Widget: user widget style 1 -->
+                <div class="box box-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-green">
+                        <div class="widget-user-image">
+                            <img class="img-circle" src="~/admin-lte/img/lucky.png" alt="Winners No">
+                        </div>
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">No of Winners</h3>
+                        <h5 class="widget-user-desc">Total Number of Winners based on Project regardless Prize Amount</h5>
+                    </div>
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-stacked">
+                            @foreach (var item in ViewBag.WinnersList)
+                            {
+                                <li><a href="#">@item.ProjectName <span class="pull-right badge bg-blue">@item.NoOfProjects</span></a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.widget-user -->
             </div>
 
         </section>
@@ -76,6 +92,7 @@
 
 </div>
 
+<script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="~/admin-lte/js/adminlte.min.js"></script>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 

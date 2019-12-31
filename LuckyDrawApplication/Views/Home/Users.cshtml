@@ -15,11 +15,21 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 style="margin: 20px;">Purchasers List</h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li class="active"><a href="~/Home/Users">Purchasers List</a></li>
+            </ol>
+
+        </section>
+
         <!-- Main content -->
         <section class="content">
 
             <!-- Default box -->
-            <div class="box box-success">
+            <div class="box box-primary">
 
                 <h4 style="margin-top: 50px; font-weight:bold; text-align:center">Purchasers List</h4>
 
@@ -90,11 +100,11 @@
                                             <td>
                                                 @if (item.PrizeWon > 0)
                                                 {
-                                                    <p style="color:#64b300;font-weight:bold">RM @item.PrizeWon.00</p>
+                                                    <p style="color:#64b300;font-weight:bold">@item.PrizeWon</p>
                                                 }
                                                 else
                                                 {
-                                                    <p style="color:#ff0000;font-weight:bold;">RM 0.00</p>
+                                                    <p style="color:#ff0000;font-weight:bold;">0</p>
                                                 }
                                             </td>
                                             <td>
@@ -107,6 +117,7 @@
                             </table>
 
                         </div>
+
                     </div>
                 </div>
             </div>

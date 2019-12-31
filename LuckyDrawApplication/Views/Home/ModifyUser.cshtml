@@ -55,8 +55,7 @@
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-            </h1>
+            <h1 style="margin-top: 20px;">Modify Purchaser Details <small>ID #@Model.PurchaserID</small> </h1>
             <ol class="breadcrumb">
                 <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="~/Home/Users">Purchasers</a></li>
@@ -68,19 +67,20 @@
         <section class="content">
 
             <!-- Default box -->
-            <div class="box box-success" style="margin-top:20px;">
+            <div class="box box-primary" style="margin-top:20px;">
 
                 <div class="box-body">
+
                     <div class="container-fluid">
 
-                        <div class="row">
+                        <!-- User Modification Form -->
+                        <form id="modify_user" method="post" class="form-horizontal" action="" style="text-align:center;">
 
-                            <!-- User Modification Form -->
-                            <form id="modify_user" method="post" class="form-horizontal" action="" style="text-align:center;">
+                            <div class="row">
 
-                                <h4 style="margin-top: 50px; font-weight:bold">Modify Details of Purchaser ID #@Html.DisplayFor(model => model.PurchaserID)</h4>
+                                <h4 style="margin-top: 25px; font-weight:bold">Modify Details of Purchaser ID #@Html.DisplayFor(model => model.PurchaserID)</h4>
 
-                                <div class="row text-center" style="margin-top: 20px;">
+                                <div class="row text-center" style="margin-top: 25px;">
 
                                     <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-offset-1 col-offset-xs-0 col-xs-12 col-sm-10">
 
@@ -191,15 +191,19 @@
 
                                 </div>
 
-                                <div class="row text-center" style="margin-top:25px">
-                                    <a href='@Url.Action("Users", "Home")' class="btn btn-primary" name="back" value="Back">Back</a>
-                                    <button type="submit" class="btn btn-warning" name="register" value="Modify Purchaser">Modify</button>
-                                </div>
-                            </form>
+                            </div>
 
-                        </div>
+                            <div class="box-footer form-group" style="margin-top:50px;">
+                                <a href='@Url.Action("Users", "Home")' class="btn btn-primary pull-left" name="back" value="Back">Back</a>
+                                <button type="submit" class="btn btn-warning pull-right" name="modify" value="Modify">Modify</button>
+                            </div>
+
+
+                        </form>
                     </div>
+
                 </div>
+
             </div>
 
         </section>
@@ -211,7 +215,7 @@
 
 </div>
 
-
+<script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="~/admin-lte/js/adminlte.min.js"></script>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.js"></script>
@@ -251,7 +255,7 @@
                     validNo: true,
                     minlength: 9,
                     max15: true
-                },               
+                },
                 block:
                 {
                     required: true,

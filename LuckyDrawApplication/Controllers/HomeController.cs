@@ -21,6 +21,10 @@ namespace LuckyDrawApplication.Controllers
             if (luckydrawevent == null)
                 return RedirectToAction("Index", "Login");
 
+            ViewBag.Name = "Harry Potter";
+            ViewBag.PurchasersList = AdminController.GetPurchasersCount(luckydrawevent.EventID);
+            ViewBag.WinnersList = AdminController.GetWinnersCount(luckydrawevent.EventID);
+
             return View();
         }
 
@@ -39,6 +43,7 @@ namespace LuckyDrawApplication.Controllers
             ViewBag.FloorUnitList = list;
             ViewBag.ProjectList = GetProjectList(luckydrawevent.EventID);
             ViewBag.SalesLocation = luckydrawevent.EventLocation;
+            ViewBag.Name = "Harry Potter";
 
             return View();
         }
@@ -155,6 +160,7 @@ namespace LuckyDrawApplication.Controllers
             ViewBag.FloorUnitList = list;
             ViewBag.ProjectList = GetProjectList(luckydrawevent.EventID);
             ViewBag.SalesLocation = luckydrawevent.EventLocation;
+            ViewBag.Name = "Harry Potter";
 
             return View(user);
         }
@@ -293,7 +299,7 @@ namespace LuckyDrawApplication.Controllers
 
             Debug.WriteLine("Prize Category: " + prizeCategory + ", PrizeCode: " + prizeCode);
 
-            if (prizeCategory != "")
+            if (prizeCode != 0)
             {
                 string[] prizes = prizeCategory.Split(',');
                 prizeAmount = Convert.ToInt32(prizes[prizeCode - 1]);

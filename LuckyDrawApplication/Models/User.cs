@@ -67,7 +67,7 @@ namespace LuckyDrawApplication.Models {
         [Display(Name="DateTime")]
         public string DateTime { get; set; }
 
-        [Display(Name = "Prize Won")]
+        [Display(Name = "Prize Won (RM)")]
         public int PrizeWon { get; set; }
 
     }

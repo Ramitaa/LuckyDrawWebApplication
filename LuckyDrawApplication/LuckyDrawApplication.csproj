@@ -204,6 +204,7 @@
     <Content Include="admin-lte\img\avatar5.png" />
     <Content Include="admin-lte\img\boxed-bg.jpg" />
     <Content Include="admin-lte\img\boxed-bg.png" />
+    <Content Include="admin-lte\img\child.png" />
     <Content Include="admin-lte\img\credit\american-express.png" />
     <Content Include="admin-lte\img\credit\cirrus.png" />
     <Content Include="admin-lte\img\credit\mastercard.png" />
@@ -212,6 +213,7 @@
     <Content Include="admin-lte\img\credit\paypal2.png" />
     <Content Include="admin-lte\img\credit\visa.png" />
     <Content Include="admin-lte\img\default-50x50.gif" />
+    <Content Include="admin-lte\img\harrypotter.png" />
     <Content Include="admin-lte\img\icons.png" />
     <Content Include="admin-lte\img\lucky.png" />
     <Content Include="admin-lte\img\mortgage.png" />
@@ -291,7 +293,6 @@
     <Content Include="Views\Home\CreateStaffAndDraw.cshtml" />
     <Content Include="Views\Home\ViewUser.cshtml" />
     <Content Include="Views\Home\ModifyUser.cshtml" />
-    <Content Include="Views\Home\Winners.cshtml" />
     <Content Include="Views\Shared\_SalesConsultantLayout.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />

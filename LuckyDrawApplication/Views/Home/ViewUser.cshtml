@@ -55,8 +55,7 @@
 
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-            </h1>
+            <h1 style="margin-top: 20px;">View Purchaser Details <small>ID #@Model.PurchaserID</small> </h1>
             <ol class="breadcrumb">
                 <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
                 <li><a href="~/Home/Users">Purchasers</a></li>
@@ -68,15 +67,17 @@
         <section class="content">
 
             <!-- Default box -->
-            <div class="box box-success" style="margin-top:20px;">
+            <div class="box box-primary" style="margin-top:20px;">
 
                 <div class="box-body">
                     <div class="container-fluid">
 
-                        <div class="row">
 
-                            <!-- User Registration Form -->
-                            <form id="register_user" method="post" class="form-horizontal" action="" style="text-align:center;">
+                        <!-- User Registration Form -->
+                        <form id="register_user" method="post" class="form-horizontal" action="" style="text-align:center;">
+
+
+                            <div class="row">
 
                                 <h4 style="margin-top: 25px; font-weight:bold">Details of Purchaser ID #@Html.DisplayFor(model => model.PurchaserID)</h4>
 
@@ -104,7 +105,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2" for="emailaddress" style="text-align:left;padding: 10px;">Email</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control form-rounded"  readonly id="emailaddress" name="emailaddress" value=@Model.EmailAddress />
+                                                <input type="text" class="form-control form-rounded" readonly id="emailaddress" name="emailaddress" value=@Model.EmailAddress />
                                             </div>
                                         </div>
 
@@ -175,15 +176,19 @@
 
                                 </div>
 
-                                <div class="row text-center" style="margin-top:25px">
-                                    <a href='@Url.Action("Users", "Home")' class="btn btn-primary" name="back" value="Back">Back</a>
-                                    <a href='@Url.Action("ModifyUser", "Home", new { id = Model.PurchaserID })' class="btn btn-warning" name="modify" value="Modify">Modify</a>
-                                </div>
 
-                            </form>
 
-                        </div>
+                            </div>
+
+                            <div class="box-footer form-group" style="margin-top:50px;">
+                                <a href='@Url.Action("Users", "Home")' class="btn btn-primary pull-left" name="back" value="Back">Back</a>
+                                <a href='@Url.Action("ModifyUser", "Home", new { id = Model.PurchaserID })' class="btn btn-warning pull-right" name="modify" value="Modify">Modify</a>
+                            </div>
+
+                        </form>
+
                     </div>
+
                 </div>
             </div>
 
@@ -196,6 +201,7 @@
 
 </div>
 
+<script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="~/admin-lte/js/adminlte.min.js"></script>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 

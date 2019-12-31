@@ -769,5 +769,36 @@ namespace LuckyDrawApplication.Controllers
 
             return projectList;
         }
+
+        [NonAction]
+        public static string StaffLuckyDraw(int eventID)
+        {
+            List<Project> projectList = new List<Project>();
+
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
+            cn.Open();
+
+            MySqlCommand cmd = cn.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = String.Format("SELECT SalesConsultant, COUNT(*) as NoOfChances FROM user INNER JOIN event ON event.EventID = user.EventID WHERE user.EventID = @eventID GROUP BY SalesConsultant ORDER BY `NoOfChances` DESC");
+            cmd.Parameters.Add("@eventID", MySqlDbType.Int32).Value = eventID;
+            MySqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                Models.Project project = new Models.Project();
+                project.ProjectID = rd.GetInt16("ProjectID");
+                project.ProjectName = rd["ProjectName"].ToString();
+                project.EventID = eventID;
+                project.NoOfProjects = rd.GetInt32("PrizesWon");
+                projectList.Add(project);
+            }
+
+            rd.Close();
+            cmd.Dispose();
+            cn.Close();
+
+            return "";
+        }
+        
     }
 }

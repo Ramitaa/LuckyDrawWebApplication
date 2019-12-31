@@ -156,13 +156,13 @@ namespace LuckyDrawApplication.Controllers
                 if (updateToken.Item1)
                 {
                     var lnkHref = Url.Action("ResetPassword", "Login", new { email = forgotPassword.EmailAddress, token = updateToken.Item2 }, "https");
-                    String body = "Hi there!\nYour reset password link is " + lnkHref + ".\nClick on this link to reset your StayBetter admin account's password.\n\nBest regards,\nStayBetter Team";
-                    SendEmail("StayBetter| Reset Password Link (Admin Account)", body, forgotPassword.EmailAddress);
+                    String body = "Hi there!\nYour reset password link is " + lnkHref + ".\nClick on this link to reset your LuckyWheel admin account's password.\n\nBest regards,\nLuckyWheel Team";
+                    SendEmail("LuckyWheel | Reset Password Link (Admin Account)", body, forgotPassword.EmailAddress);
                     return RedirectToAction("AdminIndex", "Login");
                 }
                 else
                 {
-                    ViewBag.ErrorMessage = "No such email address is registered under StayBetter.";
+                    ViewBag.ErrorMessage = "No such email address is registered under LuckyWheel.";
                     return View();
                 }
             }
