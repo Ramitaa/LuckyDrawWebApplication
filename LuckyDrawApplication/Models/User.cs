@@ -8,8 +8,8 @@ namespace LuckyDrawApplication.Models {
 
     public class User
     {
-        [Display(Name = "User ID")]
-        public int UserID { get; set; }
+        [Display(Name = "Purchaser ID")]
+        public int PurchaserID { get; set; }
 
         [Required]
         [CustomValidationAlpha]
@@ -37,17 +37,17 @@ namespace LuckyDrawApplication.Models {
         [Display(Name = "Contact Number")]
         public string ContactNumber { get; set; }
 
-        [Required]
-        [CustomValidationAlpha]
-        [MinLength(3, ErrorMessage = "Minumum length of 3")]
-        [MaxLength(50, ErrorMessage = "Maximum length of 50")]
-        [Display(Name = "Project")]
-        public string Project { get; set; }
+        [Display(Name = "Project Name")]
+        public string ProjectName { get; set; }
+
+        [Display(Name = "EventID")]
+        public int EventID { get; set; }
 
         [Required]
-        [CustomValidationAlpha]
-        [MinLength(3, ErrorMessage = "Minumum length of 3")]
-        [MaxLength(50, ErrorMessage = "Maximum length of 50")]
+        [Display(Name = "ProjectID")]
+        public int ProjectID { get; set; }
+
+        [Required]
         [Display(Name = "Unit")]
         public string Unit { get; set; }
 
@@ -58,11 +58,10 @@ namespace LuckyDrawApplication.Models {
         [Display(Name = "Sales Consultant")]
         public string SalesConsultant { get; set; }
 
-        [Required]
         [CustomValidationAlpha]
         [MinLength(3, ErrorMessage = "Minumum length of 3")]
         [MaxLength(50, ErrorMessage = "Maximum length of 50")]
-        [Display(Name = "Sales Location")]
+        [Display(Name = "Event Location")]
         public string SalesLocation { get; set; }
 
         [Display(Name="DateTime")]

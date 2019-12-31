@@ -1,7 +1,7 @@
 ﻿@model LuckyDrawApplication.Models.User
 
 @{
-    ViewBag.Title = "ViewUser";
+    ViewBag.Title = "Purchaser Details";
 }
 
 <style>
@@ -39,146 +39,169 @@
         .has-success .form-control:focus {
             border-color: #00d91d;
         }
-
-    .btn-1 {
-        flex: 1 1 auto;
-        padding: 10px;
-        text-align: center;
-        transition: 0.5s;
-        background-size: 200% auto;
-        color: white;
-        /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
-        box-shadow: 0 0 20px #eee;
-        border-radius: 5em;
-        width: 100%;
-        max-width: 550px;
-        font-weight: bold;
-    }
-
-        .btn-1:hover {
-            background-position: right center; /* change the direction of the change here */
-        }
-
-        .btn-1 {
-            background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
-            max-width: 200px;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-
 </style>
 
-<!-- User Registration Form -->
-<form id="register_user" method="post" class="form-horizontal" action="" style="text-align:center;">
 
-    <h4 style="margin-top: 50px; font-weight:bold">Details of Purchaser ID #@Html.DisplayFor(model => model.UserID)</h4>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://adminlte.io/themes/AdminLTE/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 
-    <div class="row text-center" style="margin-top: 20px;">
+<!-- Site wrapper -->
+<div class="wrapper">
 
-        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-offset-1 col-offset-xs-0 col-xs-12 col-sm-10">
+    @Html.Partial("_SalesConsultantLayout")
 
-            <!-- Full Name -->
-            <div class="form-group text-center center-block">
-                <label class="col-md-3" for="name" style="text-align:left;padding: 10px;">Name</label>
-                <div class="col-md-9" style="margin:auto;">
-                    <input type="text" class="form-control form-rounded" id="name" name="name" value="@Html.DisplayFor(model => model.Name)" />
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li><a href="~/Home/Users">Purchasers</a></li>
+                <li class="active">View Purchaser ID #@Model.PurchaserID</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <!-- Default box -->
+            <div class="box box-success" style="margin-top:20px;">
+
+                <div class="box-body">
+                    <div class="container-fluid">
+
+                        <div class="row">
+
+                            <!-- User Registration Form -->
+                            <form id="register_user" method="post" class="form-horizontal" action="" style="text-align:center;">
+
+                                <h4 style="margin-top: 25px; font-weight:bold">Details of Purchaser ID #@Html.DisplayFor(model => model.PurchaserID)</h4>
+
+                                <div class="row text-center" style="margin-top: 30px;">
+
+                                    <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-offset-1 col-offset-xs-0 col-xs-12 col-sm-10">
+
+                                        <!-- Full Name -->
+                                        <div class="form-group text-center center-block">
+                                            <label class="col-md-2" for="name" style="text-align:left;padding: 10px;">Name</label>
+                                            <div class="col-md-10" style="margin:auto;">
+                                                <input type="text" class="form-control form-rounded" readonly id="name" name="name" value="@Html.DisplayFor(model => model.Name)" />
+                                            </div>
+                                        </div>
+
+                                        <!-- IC Number -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="ic_number" style="text-align:left;padding: 10px;">IC No</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control form-rounded" readonly id="ic_number" name="ic_number" value="@Html.DisplayFor(model => model.ICNumber)" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Email Address -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="emailaddress" style="text-align:left;padding: 10px;">Email</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control form-rounded"  readonly id="emailaddress" name="emailaddress" value=@Model.EmailAddress />
+                                            </div>
+                                        </div>
+
+                                        <!-- Contact Number -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="contactnumber" style="text-align:left;padding: 10px;">Contact No</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control form-rounded" readonly id="contactnumber" name="contactnumber" value="@Html.DisplayFor(model => model.ContactNumber)" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Project -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="project" style="text-align:left;padding: 10px;">Project</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control form-rounded" readonly id="project" name="project" value="@Html.DisplayFor(model => model.ProjectName)" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Unit -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="unit" style="text-align:left;padding: 10px;">Unit</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control form-rounded" readonly id="unit" name="unit" value="@Html.DisplayFor(model => model.Unit)" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Sales Consultant -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="salesconsultant" style="text-align:left;padding: 10px;">Sales Consultant</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control form-rounded" readonly id="salesconsultant" name="salesconsultant" value="@Html.DisplayFor(model => model.SalesConsultant)" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Sales Location -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="saleslocation" style="text-align:left;padding: 10px;">Sales Location</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control form-rounded" readonly id="saleslocation" name="saleslocation" value="@Html.DisplayFor(model => model.SalesLocation)" />
+                                            </div>
+                                        </div>
+
+                                        <!-- DateTime -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="saleslocation" style="text-align:left;padding: 10px;">DateTime</label>
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control form-rounded" readonly id="datetime" name="datetime" value="@Html.DisplayFor(model => model.DateTime)" />
+                                            </div>
+                                        </div>
+
+                                        <!-- Prize Won -->
+                                        <div class="form-group">
+                                            <label class="col-md-2" for="prizewon" style="text-align:left;padding: 10px;">Prize Won</label>
+                                            <div class="col-md-10">
+                                                @if (Model.PrizeWon > 0)
+                                                {
+                                                    <input type="text" class="form-control form-rounded" id="prizewon" readonly name="prizewon" value="RM @Model.PrizeWon.00" style="color:#64b300;font-weight:bold" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" class="form-control form-rounded" id="prizewon" readonly name="prizewon" value="RM 0.00" style="color:#ff0000;font-weight:bold;" />
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row text-center" style="margin-top:25px">
+                                    <a href='@Url.Action("Users", "Home")' class="btn btn-primary" name="back" value="Back">Back</a>
+                                    <a href='@Url.Action("ModifyUser", "Home", new { id = Model.PurchaserID })' class="btn btn-warning" name="modify" value="Modify">Modify</a>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- IC Number -->
-            <div class="form-group">
-                <label class="col-md-3" for="ic_number" style="text-align:left;padding: 10px;">IC No</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control form-rounded" id="ic_number" name="ic_number" value="@Html.DisplayFor(model => model.ICNumber)" />
-                </div>
-            </div>
-
-            <!-- Email Address -->
-            <div class="form-group">
-                <label class="col-md-3" for="emailaddress" style="text-align:left;padding: 10px;">Email</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control form-rounded" id="emailaddress" name="emailaddress" value=@Model.EmailAddress />
-                </div>
-            </div>
-
-            <!-- Contact Number -->
-            <div class="form-group">
-                <label class="col-md-3" for="contactnumber" style="text-align:left;padding: 10px;">Contact No</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control form-rounded" id="contactnumber" name="contactnumber" value="@Html.DisplayFor(model => model.ContactNumber)" />
-                </div>
-            </div>
-
-            <!-- Project -->
-            <div class="form-group">
-                <label class="col-md-3" for="project" style="text-align:left;padding: 10px;">Project</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control form-rounded" id="project" name="project" value="@Html.DisplayFor(model => model.Project)" />
-                </div>
-            </div>
-
-            <!-- Unit -->
-            <div class="form-group">
-                <label class="col-md-3" for="unit" style="text-align:left;padding: 10px;">Unit</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control form-rounded" id="unit" name="unit" value="@Html.DisplayFor(model => model.Unit)" />
-                </div>
-            </div>
-
-            <!-- Sales Consultant -->
-            <div class="form-group">
-                <label class="col-md-3" for="salesconsultant" style="text-align:left;padding: 10px;">Sales Consultant</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control form-rounded" id="salesconsultant" name="salesconsultant" value="@Html.DisplayFor(model => model.SalesConsultant)" />
-                </div>
-            </div>
-
-            <!-- Sales Location -->
-            <div class="form-group">
-                <label class="col-md-3" for="saleslocation" style="text-align:left;padding: 10px;">Sales Location</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control form-rounded" id="saleslocation" name="saleslocation" value="@Html.DisplayFor(model => model.SalesLocation)" />
-                </div>
-            </div>
-
-            <!-- DateTime -->
-            <div class="form-group">
-                <label class="col-md-3" for="saleslocation" style="text-align:left;padding: 10px;">DateTime</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control form-rounded" id="datetime" name="datetime" value="@Html.DisplayFor(model => model.DateTime)" />
-                </div>
-            </div>
-
-            <!-- Prize Won -->
-            <div class="form-group">
-                <label class="col-md-3" for="prizewon" style="text-align:left;padding: 10px;">PrizeWon</label>
-                <div class="col-md-9">
-                    @if (Model.PrizeWon == 1)
-                    {
-                        <input type="text" class="form-control form-rounded" id="prizewon" name="prizewon" value="RM 8888.00" style="color:#64b300;font-weight:bold" />
-                    }
-                    else if (Model.PrizeWon == 2)
-                    {
-                        <input type="text" class="form-control form-rounded" id="prizewon" name="prizewon" value="RM 500.00" style="color:#72cc00;font-weight:bold" />
-                    }
-                    else if (Model.PrizeWon == 3)
-                    {
-                        <input type="text" class="form-control form-rounded" id="prizewon" name="prizewon" value="RM 200.00" style="color:#80e600;font-weight:bold" />
-                    }
-                    else
-                    {
-                        <input type="text" class="form-control form-rounded" id="prizewon" name="prizewon" value="RM 0.00" style="color:#ff0000;font-weight:bold;" />
-                    }
-                </div>
-            </div>
-
-        </div>
-
+        </section>
+        <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
 
-    <div class="row text-center" style="margin-top:25px">
-        <a href='@Url.Action("Users", "Home")' class="btn btn-1" name="back" value="Back">Back</a>
-        <a href='@Url.Action("ModifyUser", "Home", new { id = Model.UserID })' class="btn btn-1" name="modify" value="Modify">Modify</a>
-    </div>
+    @Html.Partial("_Footer")
 
-</form>
+</div>
+
+<script src="~/admin-lte/js/adminlte.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<!-- #endregion -->
+<script>
+    $(document).ready(function () {
+        $('#purchasers').addClass("active");
+    });
+</script>
