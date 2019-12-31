@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LuckyDrawApplication.Models
 {
 
-    public class Project
+    public class Winner
     {
         [Display(Name = "Project ID")]
         public int ProjectID { get; set; }

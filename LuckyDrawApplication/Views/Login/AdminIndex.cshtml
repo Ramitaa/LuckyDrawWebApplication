@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Admin Login";
+}
+
+@model LuckyDrawApplication.Models.Admin
+
+<style>
+    body {
+        background-color: gainsboro;
+    }
+</style>
+
+<link rel="stylesheet" href="~/admin-lte/css/AdminLTE.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<div class="login-box">
+    <div class="login-logo">
+        <b>LuckyWheel</b><small>Admin</small>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body" style="padding-bottom:40px;">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div style="text-align: center; color: #a94442" ;>
+                @ViewBag.ErrorMessage
+            </div>
+
+            <div class="form-group has-feedback" style="margin-top:20px;">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email Address" } })
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group has-feedback">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.EventID, (IEnumerable<SelectListItem>)ViewBag.Events, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EventID, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="row">
+                <div class="col-xs-8"></div>
+                <div class="col-xs-4">
+                    <button type="submit" id="Index" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:5px;">
+                <div class="col-xs-6">
+                    <a style="vertical-align: -webkit-baseline-middle;" href="@Url.Action("Index", "Login")">I'm a Sales Agent</a>
+                </div>
+                <div class="col-xs-6"  style="text-align:end;">
+                    <a style="vertical-align: -webkit-baseline-middle;" href="@Url.Action("ForgotPassword", "Login")">I forgot my password</a>
+                </div>
+            </div>
+
+        }
+
+    </div>
+    <!-- /.login-box-body -->
+</div>
+
+<script src="~/admin-lte/js/adminlte.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
