@@ -186,7 +186,7 @@ namespace LuckyDrawApplication.Controllers
             {
                 if (ResetPasswordInDB(resetPassword))
                 {
-                    return RedirectToAction("Index", "Login");
+                    return RedirectToAction("AdminIndex", "Login");
                 }
                 else
                 {

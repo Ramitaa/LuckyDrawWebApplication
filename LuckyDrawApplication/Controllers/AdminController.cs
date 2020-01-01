@@ -63,9 +63,9 @@ namespace LuckyDrawApplication.Controllers
             if (a_user == null || luckydrawevent == null)
                 return RedirectToAction("AdminIndex", "Login");
 
-            if (user != null) 
+            if (user != null)
             {
-                if(DuplicateUserExists(user))
+                if (DuplicateUserExists(user))
                 {
                     return Json(new
                     {
@@ -77,11 +77,12 @@ namespace LuckyDrawApplication.Controllers
                 else
                 {
                     int results = CreateNewUser(user, luckydrawevent.EventID);
-                 
+
                     return Json(new
                     {
                         success = true,
                         draw = results,
+                        urllink = Url.Action("LuckyDrawAnimation", "Admin", new { name = user.Name.ToUpper(), prize = results }, "https"),
                         message = user.Name.ToUpper() + " has been registered successfully!"
                     }, JsonRequestBehavior.AllowGet);
                 }
@@ -97,11 +98,11 @@ namespace LuckyDrawApplication.Controllers
                     message = user.Name.ToUpper() + " cannot be registered! Error: " + response_message
                 }, JsonRequestBehavior.AllowGet);
             }
-           
+
         }
 
         [HttpGet]
-        public ActionResult CreateStaffAndDraw()
+        public ActionResult StaffLuckyDraw()
         {
             Models.Admin a_user = (Models.Admin)Session["admin"];
             Models.Event luckydrawevent = (Models.Event)Session["event"];
@@ -116,7 +117,75 @@ namespace LuckyDrawApplication.Controllers
 
             return View();
         }
- 
+
+        [HttpPost]
+        public ActionResult PostStaffLuckyDraw()
+        {
+            Models.Admin a_user = (Models.Admin)Session["admin"];
+            Models.Event luckydrawevent = (Models.Event)Session["event"];
+
+            if (a_user == null || luckydrawevent == null)
+                return RedirectToAction("AdminIndex", "Login");
+
+            if (luckydrawevent == null)
+                return RedirectToAction("Index", "Login");
+
+            ViewBag.Name = a_user.Name;
+
+            string staff_name = StaffLuckyDraw(luckydrawevent.EventID);
+
+            if (staff_name == null || staff_name == "")
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "No sales agent to be picked as winner!"
+                }, JsonRequestBehavior.AllowGet); ;
+            }
+            else
+            {
+                return Json(new
+                {
+                    success = true,
+                    message = staff_name,
+                    urllink = Url.Action("StaffLuckyDrawAnimation", "Admin", new { name = staff_name.ToUpper(), prize = 5000 }, "https"),
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult StaffLuckyDrawAnimation(string name, int prize)
+        {
+            Models.Admin a_user = (Models.Admin)Session["admin"];
+            Models.Event luckydrawevent = (Models.Event)Session["event"];
+
+            if (a_user == null || luckydrawevent == null)
+                return RedirectToAction("AdminIndex", "Login");
+
+            ViewBag.Name = a_user.Name;
+            ViewBag.WinnerName = name;
+            ViewBag.WinnerPrize = prize;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult LuckyDrawAnimation(string name, int prize)
+        {
+            Models.Admin a_user = (Models.Admin)Session["admin"];
+            Models.Event luckydrawevent = (Models.Event)Session["event"];
+
+            if (a_user == null || luckydrawevent == null)
+                return RedirectToAction("AdminIndex", "Login");
+
+            ViewBag.Name = a_user.Name;
+            ViewBag.WinnerName = name;
+            ViewBag.WinnerPrize = prize;
+
+            return View();
+        }
+
+
         public ActionResult Users()
         {
             Models.Admin a_user = (Models.Admin)Session["admin"];
@@ -413,7 +482,7 @@ namespace LuckyDrawApplication.Controllers
 
             Debug.WriteLine("Prize Category: " + prizeCategory + ", PrizeCode: " + prizeCode);
 
-            if (prizeCategory != "")
+            if (prizeCode != 0)
             {
                 string[] prizes = prizeCategory.Split(',');
                 prizeAmount = Convert.ToInt32(prizes[prizeCode - 1]);
@@ -771,34 +840,66 @@ namespace LuckyDrawApplication.Controllers
         }
 
         [NonAction]
-        public static string StaffLuckyDraw(int eventID)
+        public string StaffLuckyDraw(int eventID)
         {
-            List<Project> projectList = new List<Project>();
+            Models.User user = new Models.User();
 
             MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = String.Format("SELECT SalesConsultant, COUNT(*) as NoOfChances FROM user INNER JOIN event ON event.EventID = user.EventID WHERE user.EventID = @eventID GROUP BY SalesConsultant ORDER BY `NoOfChances` DESC");
+            cmd.CommandText = String.Format("SELECT * FROM user WHERE user.EventID = @eventID AND user.StaffWon = 0 ORDER BY RAND() LIMIT 1");
             cmd.Parameters.Add("@eventID", MySqlDbType.Int32).Value = eventID;
             MySqlDataReader rd = cmd.ExecuteReader();
             while (rd.Read())
             {
-                Models.Project project = new Models.Project();
-                project.ProjectID = rd.GetInt16("ProjectID");
-                project.ProjectName = rd["ProjectName"].ToString();
-                project.EventID = eventID;
-                project.NoOfProjects = rd.GetInt32("PrizesWon");
-                projectList.Add(project);
+                user.PurchaserID = Convert.ToInt32(rd["PurchaserID"].ToString());
+                user.Name = rd["Name"].ToString();
+                user.ICNumber = rd["ICNumber"].ToString();
+                user.EmailAddress = rd["EmailAddress"].ToString();
+                user.ContactNumber = rd["ContactNumber"].ToString();
+                user.EventID = Convert.ToInt32(rd["EventID"].ToString());
+                user.ProjectID = Convert.ToInt32(rd["ProjectID"].ToString());
+                user.Unit = rd["Unit"].ToString();
+                user.SalesConsultant = rd["SalesConsultant"].ToString();
             }
 
             rd.Close();
             cmd.Dispose();
             cn.Close();
 
-            return "";
+            UpdateDatabaseAfterStaffWon(user);
+
+            return user.SalesConsultant;
         }
-        
+
+        // Modify existing user;
+        [NonAction]
+        public void UpdateDatabaseAfterStaffWon(Models.User user)
+        {
+            try
+            {
+                MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
+                cn.Open();
+
+                MySqlCommand cmd = cn.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = String.Format("UPDATE user SET StaffWon = @staffWon WHERE PurchaserID = @id");
+                cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = user.PurchaserID;               
+                cmd.Parameters.Add("@staffWon", MySqlDbType.Int32).Value = 1;
+
+                MySqlDataReader rd = cmd.ExecuteReader();
+                rd.Close();
+                cmd.Dispose();
+                cn.Close();
+            }
+
+            catch (Exception e)
+            {
+                response_message = e.Message;
+            }
+        }
+
     }
 }

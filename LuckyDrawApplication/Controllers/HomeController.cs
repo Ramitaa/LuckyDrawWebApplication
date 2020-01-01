@@ -75,6 +75,7 @@ namespace LuckyDrawApplication.Controllers
                     {
                         success = true,
                         draw = results,
+                        urllink = Url.Action("LuckyDrawAnimation", "Home", new { name = user.Name.ToUpper(), prize = results }, "https"),
                         message = user.Name.ToUpper() + " has been registered successfully!"
                     }, JsonRequestBehavior.AllowGet);
                 }
@@ -94,16 +95,20 @@ namespace LuckyDrawApplication.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateStaffAndDraw()
+        public ActionResult LuckyDrawAnimation(string name, int prize)
         {
             Models.Event luckydrawevent = (Models.Event)Session["event"];
 
             if (luckydrawevent == null)
                 return RedirectToAction("Index", "Login");
 
+            ViewBag.Name = "Harry Potter";
+            ViewBag.WinnerName = name;
+            ViewBag.WinnerPrize = prize;
+
             return View();
         }
- 
+
         public ActionResult Users()
         {
             Models.Event luckydrawevent = (Models.Event)Session["event"];
@@ -112,20 +117,9 @@ namespace LuckyDrawApplication.Controllers
                 return RedirectToAction("Index", "Login");
             
             List<User> userList = GetUserList(luckydrawevent.EventID);
+            ViewBag.Name = "Harry Potter";
 
             return View(userList);
-        }
-
-        public ActionResult Winners()
-        {
-            Models.Event luckydrawevent = (Models.Event)Session["event"];
-
-            if (luckydrawevent == null)
-                return RedirectToAction("Index", "Login");
-
-            List<User> winnerList = GetWinnerList(luckydrawevent.EventID);
-
-            return View(winnerList);
         }
 
         public ActionResult ViewUser(int id)
@@ -136,6 +130,7 @@ namespace LuckyDrawApplication.Controllers
                 return RedirectToAction("Index", "Login");
 
             Models.User user = GetUser(id);
+            ViewBag.Name = "Harry Potter";
             return View(user);
         }
 

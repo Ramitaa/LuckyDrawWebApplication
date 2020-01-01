@@ -1,0 +1,222 @@
+﻿<style>
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.buttons {
+  margin-top: 50px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.blob-btn {
+  z-index: 1;
+  position: relative;
+  padding: 30px 56px;
+  margin-bottom: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #05004f;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  transition: color 0.5s;
+  cursor: pointer;
+}
+.blob-btn:before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 6px solid #05004f;
+}
+.blob-btn:after {
+  content: "";
+  z-index: -2;
+  position: absolute;
+  left: 9px;
+  top: 9px;
+  width: 100%;
+  height: 100%;
+  border: 6px solid #dfe2e6;
+  transition: all 0.3s 0.2s;
+}
+.blob-btn:hover {
+  color: #dfe2e6;
+}
+.blob-btn:hover:after {
+  transition: all 0.3s;
+  left: 0;
+  top: 0;
+}
+.blob-btn__inner {
+  z-index: -1;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.blob-btn__blobs {
+  position: relative;
+  display: block;
+  height: 100%;
+  -webkit-filter: url("#goo");
+          filter: url("#goo");
+}
+.blob-btn__blob {
+  position: absolute;
+  top: 6px;
+  width: 25%;
+  height: 100%;
+  background: #05004f;
+  border-radius: 100%;
+  -webkit-transform: translate3d(0, 150%, 0) scale(1.7);
+          transform: translate3d(0, 150%, 0) scale(1.7);
+  transition: -webkit-transform 0.45s;
+  transition: transform 0.45s;
+  transition: transform 0.45s, -webkit-transform 0.45s;
+}
+supports ((-webkit-filter: url("#goo")) or (filter: url("#goo"))) {
+  .blob-btn__blob {
+    -webkit-transform: translate3d(0, 150%, 0) scale(1.4);
+            transform: translate3d(0, 150%, 0) scale(1.4);
+  }
+}
+.blob-btn__blob:nth-child(1) {
+  left: 0%;
+  transition-delay: 0s;
+}
+.blob-btn__blob:nth-child(2) {
+  left: 30%;
+  transition-delay: 0.08s;
+}
+.blob-btn__blob:nth-child(3) {
+  left: 60%;
+  transition-delay: 0.16s;
+}
+.blob-btn__blob:nth-child(4) {
+  left: 90%;
+  transition-delay: 0.24s;
+}
+.blob-btn:hover .blob-btn__blob {
+  -webkit-transform: translateZ(0) scale(1.7);
+          transform: translateZ(0) scale(1.7);
+}
+supports ((-webkit-filter: url("#goo")) or (filter: url("#goo"))) {
+  .blob-btn:hover .blob-btn__blob {
+    -webkit-transform: translateZ(0) scale(1.4);
+            transform: translateZ(0) scale(1.4);
+  }
+}
+
+.login-box, .register-box {
+width: 750px;
+margin: 3% auto;
+}
+
+</style>
+
+@{
+    ViewBag.Title = "Staff Lucky Draw";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://adminlte.io/themes/AdminLTE/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Site wrapper -->
+<div class="wrapper">
+
+    @Html.Partial("_AdminLayout")
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 style="margin-top: 20px;">Staff LuckyDraw</h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Admin/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li class="active">Staff LuckyDraw</li>
+            </ol>
+
+        </section>
+
+        <div class="login-box">
+            <div class="login-logo">
+                <b>LuckyWheel</b><small>Agent</small>
+            </div>
+            <!-- /.login-logo -->
+            <div class="login-box-body" style="padding-bottom:40px;">
+                <p style="font-size: x-large;text-align: center;margin-top:20px;color:black"><b>WHO WILL WIN?</b></p>
+                <p style="font-size: large;text-align: center;color:black"><b>Let's see who has their luck on the peak this year!</b></p>
+
+                <div class="buttons">
+                    <button class="blob-btn" id="staffluckydrawnow">
+                        SPIN THE LUCKY WHEEL!
+                        <span class="blob-btn__inner">
+                            <span class="blob-btn__blobs">
+                                <span class="blob-btn__blob"></span>
+                                <span class="blob-btn__blob"></span>
+                                <span class="blob-btn__blob"></span>
+                                <span class="blob-btn__blob"></span>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <!-- /.login-box-body -->
+        </div>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    @Html.Partial("_Footer")
+
+</div>
+
+<script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/admin-lte/js/adminlte.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#staffluckydraw').addClass("active");
+
+        $('#staffluckydrawnow').click(function () {
+
+            $.ajax({
+                url: '@Url.Action("PostStaffLuckyDraw", "Admin")',
+                type: "POST",
+                data: null,
+                success: function (data) {
+
+                    if (data.success) {
+
+                        alert("You will be redirected shortly!");
+
+                        var linkHref = data.urllink;
+                        window.open(linkHref);
+
+                    }
+                    else {
+                        alert(data.message);
+                    }
+                },
+                error: function (data) {
+                    alert(data.message);
+                }
+            });
+
+        });
+
+    });
+</script>

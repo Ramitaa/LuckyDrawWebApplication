@@ -171,6 +171,7 @@
     <Content Include="admin-lte\css\alt\AdminLTE-select2.min.css" />
     <Content Include="admin-lte\css\alt\AdminLTE-without-plugins.css" />
     <Content Include="admin-lte\css\alt\AdminLTE-without-plugins.min.css" />
+    <Content Include="admin-lte\css\BlobButton.css" />
     <Content Include="admin-lte\css\skins\skin-black-light.css" />
     <Content Include="admin-lte\css\skins\skin-black-light.min.css" />
     <Content Include="admin-lte\css\skins\skin-black.css" />
@@ -217,6 +218,7 @@
     <Content Include="admin-lte\img\icons.png" />
     <Content Include="admin-lte\img\lucky.png" />
     <Content Include="admin-lte\img\mortgage.png" />
+    <Content Include="admin-lte\img\penguin.gif" />
     <Content Include="admin-lte\img\photo1.png" />
     <Content Include="admin-lte\img\photo2.png" />
     <Content Include="admin-lte\img\photo3.jpg" />
@@ -290,7 +292,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Users.cshtml" />
     <Content Include="Views\Home\CreateUserAndDraw.cshtml" />
-    <Content Include="Views\Home\CreateStaffAndDraw.cshtml" />
+    <Content Include="Views\Admin\StaffLuckyDraw.cshtml" />
     <Content Include="Views\Home\ViewUser.cshtml" />
     <Content Include="Views\Home\ModifyUser.cshtml" />
     <Content Include="Views\Shared\_SalesConsultantLayout.cshtml" />
@@ -306,6 +308,9 @@
     <Content Include="Views\Admin\ViewUser.cshtml" />
     <Content Include="Views\Admin\Winners.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\LuckyDrawAnimation.cshtml" />
+    <Content Include="Views\Admin\StaffLuckyDrawAnimation.cshtml" />
+    <Content Include="Views\Admin\LuckyDrawAnimation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

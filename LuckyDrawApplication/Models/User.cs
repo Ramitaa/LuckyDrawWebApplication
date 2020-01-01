@@ -70,5 +70,8 @@ namespace LuckyDrawApplication.Models {
         [Display(Name = "Prize Won (RM)")]
         public int PrizeWon { get; set; }
 
+        [Display(Name = "Staff Won")]
+        public int StaffWon { get; set; }
+
     }
 }

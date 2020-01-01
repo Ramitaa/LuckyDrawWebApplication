@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "LuckyDrawAnimation";
+}
+
+<style>
+.login-box, .register-box {
+width: 750px;
+margin: 3% auto;
+padding: 50px;
+}
+
+</style>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://adminlte.io/themes/AdminLTE/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Site wrapper -->
+<div class="wrapper">
+
+    @Html.Partial("_AdminLayout")
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1 style="margin-top: 20px;">LuckyDraw Results</h1>
+            <ol class="breadcrumb">
+                <li><a href="~/Admin/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li class="active">LuckyDraw Results</li>
+            </ol>
+
+        </section>
+
+        <div class="login-box">
+            <h1 class="display-4" style="text-align: center;color:black;margin-bottom:20px;">LuckyWheel Results</h1>
+            <!-- /.login-logo -->
+            <div class="login-box-body" style="padding-bottom:40px;">
+
+                <img src="/admin-lte/img/penguin.gif" style="text-align: center;margin: auto;display: block;margin-bottom:50px;" />
+
+                <h1 class="display-4" style="text-align: center;color:black">DEAR <b>@ViewBag.WinnerName</b>, YOU HAVE WON</h1>
+
+                @if (ViewBag.WinnerPrize > 0)
+                {
+                    <h1 class="display-2" style="text-align: center;color:#64b300;"><b>RM @ViewBag.WinnerPrize.00</b></h1>
+                }
+                else
+                {
+                    <h1 class="display-2" style="text-align: center;color:#ff0000"><b>RM @ViewBag.WinnerPrize.00</b></h1>
+                }
+            </div>
+            <!-- /.login-box-body -->
+        </div>
+
+    </div>
+    <!-- /.content-wrapper -->
+
+    @Html.Partial("_Footer")
+
+</div>
+
+<script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/admin-lte/js/adminlte.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#registration').addClass("active");
+
+    });
+</script>
