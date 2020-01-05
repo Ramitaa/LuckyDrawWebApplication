@@ -17,6 +17,8 @@ namespace LuckyDrawApplication.Controllers
     public class AdminController : Controller
     {
         private string response_message = "";
+        private List<int> staff_prizes = new List<int>() { 4888, 3888, 5888 };
+        private int orderNo = 0;
 
         public ActionResult Index()
         {
@@ -149,11 +151,22 @@ namespace LuckyDrawApplication.Controllers
             }
             else
             {
+                int prize_a = 0;
+
+                if (orderNo < staff_prizes.Count)
+                {
+                    prize_a = staff_prizes[orderNo];
+                }
+
+                Debug.WriteLine("Order No: " + orderNo);
+
+                orderNo = orderNo +  1;
+
                 return Json(new
                 {
                     success = true,
                     message = staff_name,
-                    urllink = Url.Action("StaffLuckyDrawAnimation", "Admin", new { name = staff_name.ToUpper(), prize = 5000 }, "https"),
+                    urllink = Url.Action("StaffLuckyDrawAnimation", "Admin", new { name = staff_name.ToUpper(), prize = prize_a }, "https"),
                 }, JsonRequestBehavior.AllowGet);
             }
         }

@@ -1,185 +1,251 @@
-﻿<style>
-*, *:before, *:after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-.buttons {
-  margin-top: 50px;
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.blob-btn {
-  z-index: 1;
-  position: relative;
-  padding: 30px 56px;
-  margin-bottom: 30px;
-  text-align: center;
-  text-transform: uppercase;
-  color: #05004f;
-  font-size: 16px;
-  font-weight: bold;
-  background-color: transparent;
-  outline: none;
-  border: none;
-  transition: color 0.5s;
-  cursor: pointer;
-}
-.blob-btn:before {
-  content: "";
-  z-index: 1;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border: 6px solid #05004f;
-}
-.blob-btn:after {
-  content: "";
-  z-index: -2;
-  position: absolute;
-  left: 9px;
-  top: 9px;
-  width: 100%;
-  height: 100%;
-  border: 6px solid #dfe2e6;
-  transition: all 0.3s 0.2s;
-}
-.blob-btn:hover {
-  color: #dfe2e6;
-}
-.blob-btn:hover:after {
-  transition: all 0.3s;
-  left: 0;
-  top: 0;
-}
-.blob-btn__inner {
-  z-index: -1;
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-.blob-btn__blobs {
-  position: relative;
-  display: block;
-  height: 100%;
-  -webkit-filter: url("#goo");
-          filter: url("#goo");
-}
-.blob-btn__blob {
-  position: absolute;
-  top: 6px;
-  width: 25%;
-  height: 100%;
-  background: #05004f;
-  border-radius: 100%;
-  -webkit-transform: translate3d(0, 150%, 0) scale(1.7);
-          transform: translate3d(0, 150%, 0) scale(1.7);
-  transition: -webkit-transform 0.45s;
-  transition: transform 0.45s;
-  transition: transform 0.45s, -webkit-transform 0.45s;
-}
-supports ((-webkit-filter: url("#goo")) or (filter: url("#goo"))) {
-  .blob-btn__blob {
-    -webkit-transform: translate3d(0, 150%, 0) scale(1.4);
-            transform: translate3d(0, 150%, 0) scale(1.4);
-  }
-}
-.blob-btn__blob:nth-child(1) {
-  left: 0%;
-  transition-delay: 0s;
-}
-.blob-btn__blob:nth-child(2) {
-  left: 30%;
-  transition-delay: 0.08s;
-}
-.blob-btn__blob:nth-child(3) {
-  left: 60%;
-  transition-delay: 0.16s;
-}
-.blob-btn__blob:nth-child(4) {
-  left: 90%;
-  transition-delay: 0.24s;
-}
-.blob-btn:hover .blob-btn__blob {
-  -webkit-transform: translateZ(0) scale(1.7);
-          transform: translateZ(0) scale(1.7);
-}
-supports ((-webkit-filter: url("#goo")) or (filter: url("#goo"))) {
-  .blob-btn:hover .blob-btn__blob {
-    -webkit-transform: translateZ(0) scale(1.4);
-            transform: translateZ(0) scale(1.4);
-  }
-}
-
-.login-box, .register-box {
-width: 750px;
-margin: 3% auto;
-}
-
-</style>
+﻿@model LuckyDrawApplication.Models.User
 
 @{
-    ViewBag.Title = "Staff Lucky Draw";
+    ViewBag.Title = "Purchaser Registration";
 }
+
+<style>
+    body {
+        background: -webkit-linear-gradient(bottom, #C11427, #D3112B);
+    }
+
+    #rebatesheader {
+        font-family: 'Roboto';
+        font-weight: 900;
+        font-size: 40px;
+        background: -webkit-radial-gradient(#ffd875, #d99834);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .results-form {
+        background: rgba(76, 175, 80, 0);
+        margin-top: 10%;
+        margin-bottom: 5%;
+        width: 70%;
+        font-family: 'Roboto';
+        color: white;
+    }
+
+    .registration-image {
+        text-align: center;
+    }
+
+        .registration-image img {
+            width: 50%;
+            margin-top: -6%;
+        }
+
+    button.button {
+        border-radius: 1rem;
+        padding: 1rem;
+        font-family: 'Roboto';
+        font-size: medium;
+        font-weight: bolder;
+        padding: 1rem 5rem;
+        color: #c90000;
+        box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
+        border: solid 3px transparent;
+        background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #d49e4a, #d99834);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        box-shadow: 2px 1000px 1px #E0B066 inset;
+    }
+
+        button.button:hover {
+            box-shadow: none;
+            color: #c90000;
+        }
+
+    #special {
+        top: 0;
+        margin-top: 10px;
+        position: absolute;
+        right: 0;
+        margin-right: 20px;
+    }
+
+    #pig {
+        border-radius: 1rem;
+        font-family: 'Roboto';
+        font-size: small;
+        padding: .1rem 2rem;
+        color: #c90000;
+        box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
+        border: solid 3px transparent;
+        background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #d49e4a, #d99834);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        box-shadow: 2px 1000px 1px #E0B066 inset;
+    }
+
+    .module-border-wrap {
+        background: linear-gradient(to right, #d49e4a, #ffd875);
+        padding: 8px;
+        margin-left: 100px;
+        margin-right: 100px;
+        margin-top: 30px;
+    }
+
+    .module {
+        background: #C11427;
+        color: white;
+        font-family: 'Roboto';
+        font-weight: 900;
+        font-size: 100px;
+    }
+
+    #press {
+        color: white;
+        font-size: 15px;
+        margin-top: 35px;
+        margin-bottom: 35px;
+    }
+
+    #details {
+        color: white;
+        font-size: 25px;
+        margin-top: 30px;
+    }
+
+    #details2 {
+        color: white;
+        font-size: 20px;
+        margin-top: 5px;
+    }
+
+     .blob-btn {
+      z-index: 1;
+      position: relative;
+      padding: 40px 66px;
+      margin-bottom: 30px;
+      text-align: center;
+      text-transform: uppercase;
+      color: white;
+      font-size: 25px;
+      font-weight: bold;
+      background-color: transparent;
+      outline: none;
+      border: none;
+      transition: color 0.5s;
+      cursor: pointer;
+    }
+    .blob-btn:before {
+      content: "";
+      z-index: 1;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border: 6px solid #de9f00;
+    }
+    .blob-btn:after {
+      content: "";
+      z-index: -2;
+      position: absolute;
+      left: 9px;
+      top: 9px;
+      width: 100%;
+      height: 100%;
+      transition: all 0.3s 0.2s;
+    }
+    .blob-btn:hover {
+      color: #dfe2e6;
+    }
+    .blob-btn:hover:after {
+      transition: all 0.3s;
+      left: 0;
+      top: 0;
+    }
+    .blob-btn__inner {
+      z-index: -1;
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .blob-btn__blobs {
+      position: relative;
+      display: block;
+      height: 100%;
+      -webkit-filter: url("#goo");
+              filter: url("#goo");
+    }
+    .blob-btn__blob {
+      position: absolute;
+      top: 6px;
+      width: 25%;
+      height: 100%;
+      background: #c99000;
+      border-radius: 100%;
+      -webkit-transform: translate3d(0, 150%, 0) scale(1.7);
+              transform: translate3d(0, 150%, 0) scale(1.7);
+      transition: -webkit-transform 0.45s;
+      transition: transform 0.45s;
+      transition: transform 0.45s, -webkit-transform 0.45s;
+    }
+
+    .blob-btn__blob:nth-child(1) {
+      left: 0%;
+      transition-delay: 0s;
+    }
+    .blob-btn__blob:nth-child(2) {
+      left: 30%;
+      transition-delay: 0.08s;
+    }
+    .blob-btn__blob:nth-child(3) {
+      left: 60%;
+      transition-delay: 0.16s;
+    }
+    .blob-btn__blob:nth-child(4) {
+      left: 90%;
+      transition-delay: 0.24s;
+    }
+    .blob-btn:hover .blob-btn__blob {
+      -webkit-transform: translateZ(0) scale(1.7);
+              transform: translateZ(0) scale(1.7);
+    }
+</style>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://adminlte.io/themes/AdminLTE/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 
-<!-- Site wrapper -->
-<div class="wrapper">
-
-    @Html.Partial("_AdminLayout")
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1 style="margin-top: 20px;">Staff LuckyDraw</h1>
-            <ol class="breadcrumb">
-                <li><a href="~/Admin/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li class="active">Staff LuckyDraw</li>
-            </ol>
-
-        </section>
-
-        <div class="login-box">
-            <div class="login-logo">
-                <b>LuckyWheel</b><small>Agent</small>
-            </div>
-            <!-- /.login-logo -->
-            <div class="login-box-body" style="padding-bottom:40px;">
-                <p style="font-size: x-large;text-align: center;margin-top:20px;color:black"><b>WHO WILL WIN?</b></p>
-                <p style="font-size: large;text-align: center;color:black"><b>Let's see who has their luck on the peak this year!</b></p>
-
-                <div class="buttons">
-                    <button class="blob-btn" id="staffluckydrawnow">
-                        SPIN THE LUCKY WHEEL!
-                        <span class="blob-btn__inner">
-                            <span class="blob-btn__blobs">
-                                <span class="blob-btn__blob"></span>
-                                <span class="blob-btn__blob"></span>
-                                <span class="blob-btn__blob"></span>
-                                <span class="blob-btn__blob"></span>
-                            </span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-            <!-- /.login-box-body -->
-        </div>
-
+<div class="row" id="special">
+    <div class="row">
+        <a id="pig" href="@Url.Action("Logout", "Login")"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
     </div>
-    <!-- /.content-wrapper -->
+</div>
 
-    @Html.Partial("_Footer")
+<div class="container results-form">
 
+    <div class="registration-image">
+        <img style="text-align: center" src="~/admin-lte/img/TitleImage.JPG" alt="title_image" />
+    </div>
+
+    <h1 id="rebatesheader">REWARDS AND REBATES UP TO</h1>
+
+    <div class="row text-center">
+        <p id="press"><b>PRESS BUTTON TO DRAW</b></p>
+        <div class="buttons">
+            <button class="blob-btn" id="staffluckydrawnow">
+                WHO IS THE LUCKY WINNER?
+                <span class="blob-btn__inner">
+                    <span class="blob-btn__blobs">
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                    </span>
+                </span>
+            </button>
+        </div>
+    </div>
 </div>
 
 <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -188,8 +254,6 @@ margin: 3% auto;
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-        $('#staffluckydraw').addClass("active");
 
         $('#staffluckydrawnow').click(function () {
 
