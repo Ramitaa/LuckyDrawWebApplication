@@ -14,20 +14,6 @@ namespace LuckyDrawApplication.Controllers
     {
         private string response_message = "";
 
-        public ActionResult Index()
-        {
-            Models.Event luckydrawevent = (Models.Event)Session["event"];
-
-            if (luckydrawevent == null)
-                return RedirectToAction("Index", "Login");
-
-            ViewBag.Name = "Harry Potter";
-            ViewBag.PurchasersList = AdminController.GetPurchasersCount(luckydrawevent.EventID);
-            ViewBag.WinnersList = AdminController.GetWinnersCount(luckydrawevent.EventID);
-
-            return View();
-        }
-
         [HttpGet]
         public ActionResult CreateUserAndDraw()
         {
@@ -43,7 +29,11 @@ namespace LuckyDrawApplication.Controllers
             ViewBag.FloorUnitList = list;
             ViewBag.ProjectList = GetProjectList(luckydrawevent.EventID);
             ViewBag.SalesLocation = luckydrawevent.EventLocation;
-            ViewBag.Name = "Harry Potter";
+
+            DateTime dateTime = DateTime.UtcNow.Date;
+
+            ViewBag.Date = dateTime.ToString("dd | MM | yyyy").ToString();
+            ViewBag.Time = DateTime.Now.ToShortTimeString().ToString();
 
             return View();
         }
@@ -102,105 +92,10 @@ namespace LuckyDrawApplication.Controllers
             if (luckydrawevent == null)
                 return RedirectToAction("Index", "Login");
 
-            ViewBag.Name = "Harry Potter";
             ViewBag.WinnerName = name;
             ViewBag.WinnerPrize = prize;
 
             return View();
-        }
-
-        public ActionResult Users()
-        {
-            Models.Event luckydrawevent = (Models.Event)Session["event"];
-
-            if (luckydrawevent == null)
-                return RedirectToAction("Index", "Login");
-            
-            List<User> userList = GetUserList(luckydrawevent.EventID);
-            ViewBag.Name = "Harry Potter";
-
-            return View(userList);
-        }
-
-        public ActionResult ViewUser(int id)
-        {
-            Models.Event luckydrawevent = (Models.Event)Session["event"];
-
-            if (luckydrawevent == null)
-                return RedirectToAction("Index", "Login");
-
-            Models.User user = GetUser(id);
-            ViewBag.Name = "Harry Potter";
-            return View(user);
-        }
-
-        [HttpGet]
-        public ActionResult ModifyUser(int id)
-        {
-            Models.Event luckydrawevent = (Models.Event)Session["event"];
-
-            if (luckydrawevent == null)
-                return RedirectToAction("Index", "Login");
-
-            Models.User user = GetUser(id);
-            string[] tokens = user.Unit.Split('-');
-            ViewBag.Block = tokens[0];
-            ViewBag.Level = tokens[1];
-            ViewBag.Unit = tokens[2];
-
-            var list = new List<SelectListItem>();
-            for (var i = 1; i < 41; i++)
-                list.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
-
-            ViewBag.FloorUnitList = list;
-            ViewBag.ProjectList = GetProjectList(luckydrawevent.EventID);
-            ViewBag.SalesLocation = luckydrawevent.EventLocation;
-            ViewBag.Name = "Harry Potter";
-
-            return View(user);
-        }
-
-        [HttpPost]
-        public ActionResult ModifyUser(Models.User user)
-        {
-            Models.Event luckydrawevent = (Models.Event)Session["event"];
-
-            if (luckydrawevent == null)
-                return RedirectToAction("Index", "Login");
-
-            if (user != null)
-            {
-                if (DuplicateUserExistsForModification(user))
-                {
-                    return Json(new
-                    {
-                        success = false,
-                        message = "This unit has already been purchased by another buyer!"
-                    }, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    ModifyExistingUser(user, luckydrawevent.EventID);
-                    return Json(new
-                    {
-                        success = true,
-                        url = Url.Action("Users", "Home"),
-                        message = user.Name.ToUpper() + " has been successfully modified!"
-                    }, JsonRequestBehavior.AllowGet);
-                }   
-            }
-            else
-            {
-                response_message = "User is null!";
-
-                return Json(new
-                {
-                    success = false,
-                    draw = -1,
-                    message = user.Name.ToUpper() + " cannot be modified! Error: " + response_message
-                }, JsonRequestBehavior.AllowGet);
-            }
-
         }
 
         // Register new user;
@@ -212,7 +107,7 @@ namespace LuckyDrawApplication.Controllers
 
             try
             {
-                MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+                MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
                 cn.Open();
 
                 MySqlCommand cmd = cn.CreateCommand();
@@ -274,7 +169,7 @@ namespace LuckyDrawApplication.Controllers
             int prizeCode = 0;
             int prizeAmount = 0;
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -313,7 +208,7 @@ namespace LuckyDrawApplication.Controllers
         {
             Debug.WriteLine("Updating Database with PrizeCode: " + prizeCode);
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -333,7 +228,7 @@ namespace LuckyDrawApplication.Controllers
         {
             int count = 0;
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
             
             MySqlCommand cmd = cn.CreateCommand();
@@ -356,222 +251,12 @@ namespace LuckyDrawApplication.Controllers
 
         }
 
-        // Get users list
-        [NonAction]
-        public static List<Models.User> GetUserList(int eventID)
-        {
-            List<Models.User> UserList = new List<Models.User>();
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
-            cn.Open();
-
-            MySqlCommand cmd = cn.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = String.Format("SELECT user.*, project.ProjectName, project.PrizeCategory, event.EventLocation FROM user INNER JOIN project on project.ProjectID = user.ProjectID INNER JOIN event ON event.EventID = user.EventID WHERE user.EventID = @eventID");
-            cmd.Parameters.Add("@eventID", MySqlDbType.Int32).Value = eventID;
-            MySqlDataReader rd = cmd.ExecuteReader();
-            while (rd.Read())
-            {
-                Models.User user = new Models.User();
-                user.PurchaserID = Convert.ToInt32(rd["PurchaserID"].ToString());
-                user.Name = rd["Name"].ToString();
-                user.ICNumber = rd["ICNumber"].ToString();
-                user.EmailAddress = rd["EmailAddress"].ToString();
-                user.ContactNumber = rd["ContactNumber"].ToString();
-                user.EventID = Convert.ToInt32(rd["EventID"].ToString());
-                user.ProjectID = Convert.ToInt32(rd["ProjectID"].ToString());
-                user.ProjectName = rd["ProjectName"].ToString();
-                user.SalesLocation = rd["EventLocation"].ToString();
-                user.Unit = rd["Unit"].ToString();
-
-                if (Convert.ToInt32(rd["PrizeWon"]) > 0)
-                {
-                    string[] prizes = rd["PrizeCategory"].ToString().Split(',');
-                    user.PrizeWon = Convert.ToInt32(prizes[Convert.ToInt32(rd["PrizeWon"]) - 1]);
-                }
-                else
-                {
-                    user.PrizeWon = 0;
-                }
-
-                user.SalesConsultant = rd["SalesConsultant"].ToString();
-                user.DateTime = rd["DateTime"].ToString();
-                UserList.Add(user);
-            }
-
-            rd.Close();
-            cmd.Dispose();
-            cn.Close();
-
-            return UserList;
-        }
-
-        // Get users list
-        [NonAction]
-        public static List<Models.User> GetWinnerList(int eventID)
-        {
-            List<Models.User> UserList = new List<Models.User>();
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
-            cn.Open();
-
-            MySqlCommand cmd = cn.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = String.Format("SELECT user.*, project.ProjectName, project.PrizeCategory, event.EventLocation FROM user INNER JOIN project on project.ProjectID = user.ProjectID INNER JOIN event ON event.EventID = user.EventID WHERE PrizeWon > 0 AND user.EventID = @eventID");
-            cmd.Parameters.Add("@eventID", MySqlDbType.Int32).Value = eventID;
-            MySqlDataReader rd = cmd.ExecuteReader();
-            while (rd.Read())
-            {
-                Models.User user = new Models.User();
-                user.PurchaserID = Convert.ToInt32(rd["PurchaserID"].ToString());
-                user.Name = rd["Name"].ToString();
-                user.ICNumber = rd["ICNumber"].ToString();
-                user.EmailAddress = rd["EmailAddress"].ToString();
-                user.ContactNumber = rd["ContactNumber"].ToString();
-                user.EventID = Convert.ToInt32(rd["EventID"].ToString());
-                user.ProjectID = Convert.ToInt32(rd["ProjectID"].ToString());
-                user.ProjectName = rd["ProjectName"].ToString();
-                user.SalesLocation = rd["EventLocation"].ToString();
-                user.Unit = rd["Unit"].ToString();
-                user.SalesConsultant = rd["SalesConsultant"].ToString();
-
-                if (Convert.ToInt32(rd["PrizeWon"]) > 0)
-                {
-                    string[] prizes = rd["PrizeCategory"].ToString().Split(',');
-                    user.PrizeWon = Convert.ToInt32(prizes[Convert.ToInt32(rd["PrizeWon"]) - 1]);
-                }
-                else
-                {
-                    user.PrizeWon = 0;
-                }
-
-                user.DateTime = rd["DateTime"].ToString();
-                UserList.Add(user);
-            }
-
-            rd.Close();
-            cmd.Dispose();
-            cn.Close();
-
-            return UserList;
-        }
-
-        // Get users list
-        [NonAction]
-        public static Models.User GetUser(int userID)
-        {
-            Models.User user = new Models.User();
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
-            cn.Open();
-
-            MySqlCommand cmd = cn.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = String.Format("SELECT project.ProjectName, project.PrizeCategory, event.EventLocation, user.* FROM user INNER JOIN project on project.ProjectID = user.ProjectID INNER JOIN event ON event.EventID = user.EventID WHERE PurchaserID = @id");
-            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = userID;
-            MySqlDataReader rd = cmd.ExecuteReader();
-            while (rd.Read())
-            {
-                user.PurchaserID = Convert.ToInt32(rd["PurchaserID"].ToString());
-                user.Name = rd["Name"].ToString();
-                user.ICNumber = rd["ICNumber"].ToString();
-                user.EmailAddress = rd["EmailAddress"].ToString();
-                user.ContactNumber = rd["ContactNumber"].ToString();
-                user.EventID = Convert.ToInt32(rd["EventID"].ToString());
-                user.ProjectID = Convert.ToInt32(rd["ProjectID"].ToString());
-                user.ProjectName = rd["ProjectName"].ToString();
-                user.SalesLocation = rd["EventLocation"].ToString();
-                user.Unit = rd["Unit"].ToString();
-                user.SalesConsultant = rd["SalesConsultant"].ToString();
-
-                if (Convert.ToInt32(rd["PrizeWon"]) > 0)
-                {
-                    string[] prizes = rd["PrizeCategory"].ToString().Split(',');
-                    user.PrizeWon = Convert.ToInt32(prizes[Convert.ToInt32(rd["PrizeWon"]) - 1]);
-                }
-                else
-                {
-                    user.PrizeWon = 0;
-                }
-
-                user.DateTime = rd["DateTime"].ToString();
-            }
-
-            rd.Close();
-            cmd.Dispose();
-            cn.Close();
-
-            return user;
-        }
-
-        // Modify existing user;
-        [NonAction]
-        public void ModifyExistingUser(Models.User user, int eventCode)
-        {
-            try
-            {
-                MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
-                cn.Open();
-
-                MySqlCommand cmd = cn.CreateCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = String.Format("UPDATE user SET Name = @name, ICNumber = @ic, EmailAddress= @email, ContactNumber = @contact, EventID = @eventID, ProjectID = @projectID, Unit = @unit, SalesConsultant = @salesconsultant WHERE PurchaserID = @id");
-                cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = user.PurchaserID;
-                cmd.Parameters.Add("@name", MySqlDbType.VarChar).Value = user.Name.ToUpper();
-                cmd.Parameters.Add("@ic", MySqlDbType.VarChar).Value = user.ICNumber;
-                cmd.Parameters.Add("@email", MySqlDbType.VarChar).Value = user.EmailAddress.ToLower();
-                cmd.Parameters.Add("@contact", MySqlDbType.VarChar).Value = user.ContactNumber;
-                cmd.Parameters.Add("@eventID", MySqlDbType.Int32).Value = eventCode;
-                cmd.Parameters.Add("@projectID", MySqlDbType.Int32).Value = user.ProjectID;
-                cmd.Parameters.Add("@unit", MySqlDbType.VarChar).Value = user.Unit.ToUpper();
-                cmd.Parameters.Add("@salesconsultant", MySqlDbType.VarChar).Value = user.SalesConsultant.ToUpper();
-
-                MySqlDataReader rd = cmd.ExecuteReader();
-                rd.Close();
-                cmd.Dispose();
-                cn.Close();
-            }
-
-            catch (Exception e)
-            {
-                response_message = e.Message;
-            }
-        }
-
-        // Check if project and unit clashes;
-        [NonAction]
-        public static Boolean DuplicateUserExistsForModification(Models.User user)
-        {
-            Debug.WriteLine("Checking for duplicate" + user.PurchaserID + " projectID: " + user.ProjectID + "unit: " + user.Unit.ToUpper());
-            int count = 0;
-
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
-            cn.Open();
-
-            MySqlCommand cmd = cn.CreateCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = String.Format("SELECT COUNT(PurchaserID) AS userExists FROM user WHERE ProjectID = @projectID AND Unit = @unit AND PurchaserID != @id");
-            cmd.Parameters.Add("@id", MySqlDbType.VarChar).Value = user.PurchaserID;
-            cmd.Parameters.Add("@projectID", MySqlDbType.Int32).Value = user.ProjectID;
-            cmd.Parameters.Add("@unit", MySqlDbType.VarChar).Value = user.Unit.ToUpper();
-
-            MySqlDataReader rd = cmd.ExecuteReader();
-            while (rd.Read())
-            {
-                count = Convert.ToInt32(rd["userExists"].ToString());
-            }
-
-            rd.Close();
-            cmd.Dispose();
-            cn.Close();
-
-            return count > 0;
-
-        }
-
         [NonAction]
         public static List<SelectListItem> GetProjectList(int eventID)
         {
             List<SelectListItem> Projects = new List<SelectListItem>();
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();

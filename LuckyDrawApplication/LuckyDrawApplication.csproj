@@ -216,6 +216,7 @@
     <Content Include="admin-lte\img\default-50x50.gif" />
     <Content Include="admin-lte\img\harrypotter.png" />
     <Content Include="admin-lte\img\icons.png" />
+    <Content Include="admin-lte\img\LeftImage.JPG" />
     <Content Include="admin-lte\img\lucky.png" />
     <Content Include="admin-lte\img\mortgage.png" />
     <Content Include="admin-lte\img\penguin.gif" />
@@ -223,6 +224,8 @@
     <Content Include="admin-lte\img\photo2.png" />
     <Content Include="admin-lte\img\photo3.jpg" />
     <Content Include="admin-lte\img\photo4.jpg" />
+    <Content Include="admin-lte\img\RightImage.JPG" />
+    <Content Include="admin-lte\img\TitleImage.JPG" />
     <Content Include="admin-lte\img\user1-128x128.jpg" />
     <Content Include="admin-lte\img\user2-160x160.jpg" />
     <Content Include="admin-lte\img\user3-128x128.jpg" />
@@ -289,13 +292,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Users.cshtml" />
     <Content Include="Views\Home\CreateUserAndDraw.cshtml" />
     <Content Include="Views\Admin\StaffLuckyDraw.cshtml" />
-    <Content Include="Views\Home\ViewUser.cshtml" />
-    <Content Include="Views\Home\ModifyUser.cshtml" />
-    <Content Include="Views\Shared\_SalesConsultantLayout.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\AdminIndex.cshtml" />

@@ -5,332 +5,254 @@
 }
 
 <style>
-    .form-control {
-        border-radius: 5rem;
-        padding: 20px;
-        margin: auto;
+    body {
+        background: -webkit-linear-gradient(bottom, #C11427, #D3112B);
     }
 
-    input,
-    select,
-    textarea {
-        max-width: 500px;
+    .registration-form {
+        background: rgba(76, 175, 80, 0);
+        margin-top: 10%;
+        margin-bottom: 5%;
+        width: 70%;
+        font-family: 'Roboto';
+        color: white;
     }
 
-    .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
-        color: #ff0000;
-        text-align: end;
-        border-color: #ff0000;
-    }
-
-    .has-error .form-control {
-        border-color: #ff0000;
-    }
-
-        .has-error .form-control:focus {
-            border-color: #ff0000;
+        .registration-form .form-control {
+            border-color: white;
+            background: rgba(76, 175, 80, 0);
+            border-radius: 0em;
+            border-width: thin;
+            color: white;
         }
 
-    .has-success .form-control {
-        border-color: #00d91d;
-    }
-
-        .has-success .form-control:focus {
-            border-color: #00d91d;
+        .registration-form form {
+            padding: 5%;
         }
 
-    *, *:before, *:after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+            .registration-form form .row {
+                margin-bottom: 1%;
+            }
 
-    .buttons {
-        margin-top: 50px;
-        text-align: center;
-        margin-bottom: 50px;
-    }
+        .registration-form h3 {
+            margin-bottom: 8%;
+            margin-top: -10%;
+            text-align: center;
+        }
 
-    .blob-btn {
-        z-index: 1;
-        position: relative;
-        padding: 20px 46px;
-        margin-bottom: 30px;
-        text-align: center;
-        text-transform: uppercase;
-        color: #05004f;
-        font-size: 16px;
-        font-weight: bold;
-        background-color: transparent;
-        outline: none;
+        .registration-form .btnregistration {
+            width: 50%;
+            border: none;
+            border-radius: 1rem;
+            padding: 1.5%;
+            background: rgba(76, 175, 80, 0);
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+        }
+
+    .btnregistrationSubmit {
+        width: 50%;
+        border-radius: 1rem;
+        padding: 1.5%;
+        color: #fff;
+        background-color: #D3112B;
         border: none;
-        transition: color 0.5s;
         cursor: pointer;
     }
 
-        .blob-btn:before {
-            content: "";
-            z-index: 1;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            border: 6px solid #05004f;
+    .form-control::-webkit-input-placeholder {
+        color: white !important;
+    }
+    /* WebKit, Blink, Edge */
+    .form-control:-moz-placeholder {
+        color: white !important;
+    }
+    /* Mozilla Firefox 4 to 18 */
+    .form-control::-moz-placeholder {
+        color: white !important;
+    }
+    /* Mozilla Firefox 19+ */
+    .form-control:-ms-input-placeholder {
+        color: white !important;
+    }
+    /* Internet Explorer 10-11 */
+
+    .registration-image {
+        text-align: center;
+    }
+
+    .registration-image img {
+        width: 50%;
+        margin-top: -3%;
+    }
+
+    button.button {
+        border-radius: 1rem;
+        padding: 1rem;
+        font-family: 'Roboto';
+        font-size: medium;
+        font-weight: bolder;
+        padding: .5rem 10rem;
+        color: #c90000;
+        box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
+        border: solid 3px transparent;
+        background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #d49e4a, #d99834);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        box-shadow: 2px 1000px 1px #E0B066 inset;
+    }
+
+        button.button:hover {
+            box-shadow: none;
+            color: #c90000;
         }
 
-        .blob-btn:after {
-            content: "";
-            z-index: -2;
-            position: absolute;
-            left: 9px;
-            top: 9px;
-            width: 100%;
-            height: 100%;
-            border: 6px solid #dfe2e6;
-            transition: all 0.3s 0.2s;
+    .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+        color: white !important;
+        text-align: end !important;
+        border-color: #E0B066 !important;
+        border-width: medium;
+    }
+
+    .has-error .form-control {
+        border-color: #E0B066 !important;
+        border-width: medium;
+    }
+
+        .has-error .form-control:focus {
+            border-color: #E0B066 !important;
+            border-width: medium;
         }
 
-        .blob-btn:hover {
-            color: #dfe2e6;
-        }
+    select option {
+        background: rgba(211, 17, 43, 1);
+        color: #fff;
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+    }
 
-            .blob-btn:hover:after {
-                transition: all 0.3s;
-                left: 0;
-                top: 0;
-            }
-
-    .blob-btn__inner {
-        z-index: -1;
-        overflow: hidden;
-        position: absolute;
-        left: 0;
+    #special {
         top: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .blob-btn__blobs {
-        position: relative;
-        display: block;
-        height: 100%;
-        -webkit-filter: url("#goo");
-        filter: url("#goo");
-    }
-
-    .blob-btn__blob {
+        margin-top: 10px;
         position: absolute;
-        top: 6px;
-        width: 25%;
-        height: 100%;
-        background: #05004f;
-        border-radius: 100%;
-        -webkit-transform: translate3d(0, 150%, 0) scale(1.7);
-        transform: translate3d(0, 150%, 0) scale(1.7);
-        transition: -webkit-transform 0.45s;
-        transition: transform 0.45s;
-        transition: transform 0.45s, -webkit-transform 0.45s;
+        right: 0;
+        margin-right: 20px;
     }
 
-    supports ((-webkit-filter: url("#goo")) or (filter: url("#goo"))) {
-        .blob-btn__blob
-
-    {
-        -webkit-transform: translate3d(0, 150%, 0) scale(1.4);
-        transform: translate3d(0, 150%, 0) scale(1.4);
+     #pig {
+        border-radius: 1rem;
+        font-family: 'Roboto';
+        font-size: small;
+        padding: .1rem 2rem;
+        color: #c90000;
+        box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
+        border: solid 3px transparent;
+        background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #d49e4a, #d99834);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        box-shadow: 2px 1000px 1px #E0B066 inset;
     }
 
-    }
-
-    .blob-btn__blob:nth-child(1) {
-        left: 0%;
-        transition-delay: 0s;
-    }
-
-    .blob-btn__blob:nth-child(2) {
-        left: 30%;
-        transition-delay: 0.08s;
-    }
-
-    .blob-btn__blob:nth-child(3) {
-        left: 60%;
-        transition-delay: 0.16s;
-    }
-
-    .blob-btn__blob:nth-child(4) {
-        left: 90%;
-        transition-delay: 0.24s;
-    }
-
-    .blob-btn:hover .blob-btn__blob {
-        -webkit-transform: translateZ(0) scale(1.7);
-        transform: translateZ(0) scale(1.7);
-    }
-
-    supports ((-webkit-filter: url("#goo")) or (filter: url("#goo"))) {
-        .blob-btn:hover .blob-btn__blob
-
-    {
-        -webkit-transform: translateZ(0) scale(1.4);
-        transform: translateZ(0) scale(1.4);
-    }
-    }
 </style>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://adminlte.io/themes/AdminLTE/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 
-<!-- Site wrapper -->
-<div class="wrapper">
-
-    @Html.Partial("_SalesConsultantLayout")
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1 style="margin: 20px;">Purchaser Registration</h1>
-            <ol class="breadcrumb">
-                <li><a href="~/Home/Index"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li class="active">Registration</a></li>
-            </ol>
-
-        </section>
-
-
-        <!-- Main content -->
-        <section class="content">
-
-            <!-- Default box -->
-            <div class="box box-primary">
-
-                <!-- User Registration Form -->
-                <form id="register_user" method="post" class="form-horizontal" action="" style="text-align:center; padding-top: 50px; padding-bottom: 20px;">
-
-                    <div class="login-logo">
-                        <b>LuckyWheel</b><small>Purchasers</small>
-                    </div>
-
-                    <h4 style="font-weight:bold">Register A New Purchaser and Try Your Luck!</h4>
-
-                    <div class="row text-center" style="margin-top: 50px;">
-
-                        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-offset-1 col-offset-xs-0 col-xs-12 col-sm-10">
-
-                            <!-- Full Name -->
-                            <div class="form-group text-center center-block">
-                                <label class="col-md-2" for="name" style="text-align:left;padding: 10px;">Name</label>
-                                <div class="col-md-10" style="margin:auto;">
-                                    <input type="text" class="form-control form-rounded" id="name" name="name" placeholder="" />
-                                </div>
-                            </div>
-
-                            <!-- IC Number -->
-                            <div class="form-group">
-                                <label class="col-md-2" for="ic_number" style="text-align:left;padding: 10px;">IC No</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control form-rounded" id="ic_number" name="ic_number" placeholder="Eg. 7802053550786" />
-                                </div>
-                            </div>
-
-                            <!-- Email Address -->
-                            <div class="form-group">
-                                <label class="col-md-2" for="emailaddress" style="text-align:left;padding: 10px;">Email</label>
-                                <div class="col-md-10">
-                                    <input type="email" class="form-control form-rounded" id="emailaddress" name="emailaddress" placeholder="Eg. ram@gmail.com" />
-                                </div>
-                            </div>
-
-                            <!-- Contact Number -->
-                            <div class="form-group">
-                                <label class="col-md-2" for="contactnumber" style="text-align:left;padding: 10px;">Contact No</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control form-rounded" id="contactnumber" name="contactnumber" placeholder="Eg. 0166176814" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-2" for="project" style="text-align:left;padding: 10px;">Project</label>
-                                <div class="col-md-10">
-                                    @Html.DropDownList("project", (IEnumerable<SelectListItem>)ViewBag.ProjectList, new { @class = "form-control" })
-                                </div>
-                            </div>
-
-                            <!-- Block -->
-                            <div class="form-group">
-                                <label class="col-md-2" for="unit" style="text-align:left;padding: 10px;">Block</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control form-rounded" id="block" name="block" placeholder="Eg. A" />
-                                </div>
-                            </div>
-
-                            <!-- Level -->
-                            <div class="form-group">
-                                <label class="col-md-2" for="salesconsultant" style="text-align:left;padding: 10px;">Level</label>
-                                <div class="col-md-10">
-                                    @Html.DropDownList("level", new SelectList(ViewBag.FloorUnitList, "Text", "Value"), new { @class = "form-control form-rounded" })
-                                </div>
-                            </div>
-
-                            <!-- Unit -->
-                            <div class="form-group">
-                                <label class="col-md-2" for="salesconsultant" style="text-align:left;padding: 10px;">Unit</label>
-                                <div class="col-md-10">
-                                    @Html.DropDownList("unit", new SelectList(ViewBag.FloorUnitList, "Text", "Value"), new { @class = "form-control form-rounded" })
-                                </div>
-                            </div>
-
-                            <!-- Sales Consultant -->
-                            <div class="form-group">
-                                <label class="col-md-2" for="salesconsultant" style="text-align:left;padding: 10px;">Sales Consultant</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control form-rounded" id="salesconsultant" name="salesconsultant" placeholder="" />
-                                </div>
-                            </div>
-
-                            <!-- Sales Location -->
-                            <div class="form-group">
-                                <label class="col-md-2" for="saleslocation" style="text-align:left;padding: 10px;">Sales Location</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control form-rounded" id="saleslocation" name="saleslocation" value="@ViewBag.SalesLocation" readonly />
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="row text-center" style="margin-top:25px">
-                        <div class="buttons">
-                            <button class="blob-btn" type="submit" name="register" value="Register and Draw">
-                                REGISTER ME AND SPIN THE LUCKY WHEEL!
-                                <span class="blob-btn__inner">
-                                    <span class="blob-btn__blobs">
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                    </span>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-
-                </form>
-
-            </div>
-
-        </section>
-        <!-- /.content -->
+<div class="row" id="special">
+    <div class="row">
+        <a id="pig" href="@Url.Action("Logout", "Login")"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
     </div>
-    <!-- /.content-wrapper -->
-
-    @Html.Partial("_Footer")
-
 </div>
 
+<div class="container registration-form">
+
+    <div class="registration-image">
+        <img style="text-align: center" src="~/admin-lte/img/TitleImage.JPG" alt="title_image" />
+    </div>
+
+    <form id="register_user" method="post" class="form-horizontal" action="">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control " id="name" name="name" placeholder="Name" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control " id="ic_number" name="ic_number" placeholder="IC No" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="email" class="form-control " id="emailaddress" name="emailaddress" placeholder="Email" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control " id="contactnumber" name="contactnumber" placeholder="Tel" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownList("project", (IEnumerable<SelectListItem>)ViewBag.ProjectList, new { @class = "form-control", @style = "color: white" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control " id="block" name="block" placeholder="Block" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownList("level", new SelectList(ViewBag.FloorUnitList, "Text", "Value"), new { @class = "form-control", @style = "color: white" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        @Html.DropDownList("unit", new SelectList(ViewBag.FloorUnitList, "Text", "Value"), new { @class = "form-control", @style = "color: white" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="text" class="form-control " id="salesconsultant" name="salesconsultant" placeholder="Sales Consultant Name" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" style="margin-top:20px;">
+                <p style="color:white; font-size:medium;">@ViewBag.Date &emsp; @ViewBag.Time</p>
+                <p style="color:white; font-size:medium;">@ViewBag.SalesLocation</p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <button class="button" id="submit_form" type="submit">SUBMIT</button>
+        </div>
+    </form>
+</div>
 
 <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="~/admin-lte/js/adminlte.min.js"></script>
@@ -433,32 +355,32 @@
                 error.insertAfter(element);
             },
             highlight: function (element, errorClass, validClass) {
-                $(element).parents(".col-md-10").addClass("has-error").removeClass("has-success");
+                $(element).parents(".col-md-12").addClass("has-error");
             },
             unhighlight: function (element, errorClass, validClass) {
-                $(element).parents(".col-md-10").addClass("has-success").removeClass("has-error");
+                $(element).parents(".col-md-12").removeClass("has-error");
             },
         });
 
         jQuery.validator.addMethod("validIC", function (value, element) {
         return value.length == 12;
-        }, "This field must be exactly 12 characters long");
+        }, "Exactly 12 characters allowed");
 
         jQuery.validator.addMethod("max50", function (value, element) {
             return value.length < 50;
-        }, "This field must be less than 50 characters");
+        }, "Less than 50 characters allowed");
 
         jQuery.validator.addMethod("max15", function (value, element) {
             return value.length < 15;
-        }, "This field must be less than 15 characters");
+        }, "Less than 15 characters allowed");
 
         jQuery.validator.addMethod("validNo", function (value, element) {
         return !(isNaN(value));
-        }, "This field must be only contain numerical characters");
+        }, "Only numerical characters allowed");
 
         jQuery.validator.addMethod("validAlpha", function (value, element) {
             return (isNaN(value));
-        }, "This field must be only contain alphabetical characters");
+        }, "Only alphabetical characters allowed");
 
     });
 

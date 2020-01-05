@@ -1,73 +1,249 @@
 ﻿@model LuckyDrawApplication.Models.Event
 
-    @{
-        ViewBag.Title = "Login";
+@{
+    ViewBag.Title = "Login";
+}
+
+<style>
+    body {
+        background: -webkit-linear-gradient(bottom, #C11427, #D3112B);
     }
 
-    <style>
-        body {
-            background-color: gainsboro;
+    .login-form .btnregistration {
+        width: 50%;
+        border: none;
+        border-radius: 1rem;
+        padding: 1.5%;
+        background: rgba(76, 175, 80, 0);
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    button.button {
+        border-radius: 1rem;
+        padding: 5px 80px 5px 80px;
+        font-family: 'Roboto';
+        font-size: medium;
+        font-weight: bolder;
+        color: #c90000;
+        box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
+        border: solid 3px transparent;
+        background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #d49e4a, #d99834);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        box-shadow: 2px 1000px 1px #E0B066 inset;
+    }
+
+    button.button:hover {
+        box-shadow: none;
+        color: #c90000;
+    }
+
+    button.button1 {
+        border-radius: 1rem;
+        padding: 1rem;
+        font-family: 'Roboto';
+        font-size: medium;
+        font-weight: bolder;
+        padding: .5rem 5rem;
+        color: #c90000;
+        box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
+        border: solid 3px transparent;
+        background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #d49e4a, #d99834);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+        box-shadow: 2px 1000px 1px #E0B066 inset;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
+        button.button1:hover {
+            box-shadow: none;
+            color: #c90000;
         }
-    </style>
 
-    <link rel="stylesheet" href="~/admin-lte/css/AdminLTE.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+        color: white !important;
+        text-align: end !important;
+        border-color: #E0B066 !important;
+        border-width: medium;
+    }
 
-    <div class="login-box">
-        <div class="login-logo">
-            <b>LuckyWheel</b><small>Agent</small>
-        </div>
-        <!-- /.login-logo -->
-        <div class="login-box-body" style="padding-bottom:40px;">
-            <p class="login-box-msg">Sign in to start your session</p>
+    .has-error .form-control {
+        border-color: #E0B066 !important;
+        border-width: medium;
+    }
 
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+        .has-error .form-control:focus {
+            border-color: #E0B066 !important;
+            border-width: medium;
+        }
 
-                <!-- <p>@ViewBag.Hash</p>
+    .modal {
+        padding: 20px 10px 20px 10px;
+    }
 
-                    <p>@ViewBag.Salt</p>-->
+    .vertical-alignment-helper {
+        display: table;
+        height: 100%;
+        width: 100%;
+    }
+
+    .vertical-align-center {
+        /* To center vertically */
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .modal-content {
+        /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+        width: inherit;
+        height: inherit;
+        /* To center horizontally */
+        margin: 0 auto;
+    }
+
+    #title {
+        font-family: 'Roboto';
+        font-size: medium;
+        font-weight: bolder;
+        color: #f2b350;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: larger;
+    }
+
+    #special {
+        bottom: 0;
+        margin-bottom: 100px;
+        position: absolute;
+        left: 40%;
+        right: 40%;
+    }
+</style>
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://adminlte.io/themes/AdminLTE/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 
 
-                <div style="text-align: center; color: #a94442" ;>
-                    @ViewBag.ErrorMessage
-                </div>
 
-                <div class="form-group has-feedback" style="margin-top:20px;">
-                    @Html.EditorFor(model => model.EventCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Event Code" } })
-                    <span class="glyphicon glyphicon-tag form-control-feedback"></span>
-                    @Html.ValidationMessageFor(model => model.EventCode, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group has-feedback">
-                    @Html.EditorFor(model => model.EventPassword, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    @Html.ValidationMessageFor(model => model.EventPassword, "", new { @class = "text-danger" })
-                </div>
-
-
-                <div class="row">
-                    <div class="col-xs-8">
-                        <a style="vertical-align: -webkit-baseline-middle;" href="@Url.Action("AdminIndex", "Login")">I'm an Admin</a>
-
-                    </div>
-
-                    <div class="col-xs-4">
-                        <button type="submit" id="Index" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-
-
-
-            }
-
-        </div>
-        <!-- /.login-box-body -->
+<div class="row  text-center" id="special">
+    <div class="row">
+        <!-- Button trigger modal -->
+        <button class="button" data-toggle="modal" data-target="#myModal">LOGIN</button>
     </div>
-    <!-- /.login-box -->
+    <a style="color:#f2b350; vertical-align: -webkit-baseline-middle;" href="@Url.Action("AdminIndex", "Login")">I'm an Admin</a>
+</div>
 
-    <script src="~/admin-lte/js/adminlte.min.js"></script>
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+
+            <div class="modal-content" style="background: rgba(211, 17, 43, 1);">
+                <button style="margin:10px;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 id="title"><b>Sales Consultant Login</b></h2>
+                <form id="login_user" method="post" class="form-horizontal" action="">
+
+                    <div class="row text-center" style="margin-right:100px; margin-left:100px;">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control " id="eventcode" name="eventcode" placeholder="Event Code" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="password" class="form-control " id="eventpassword" name="eventpassword" placeholder="Event Password" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row text-center">
+                            <button class="button button1" id="submit_form" type="submit">ENTER</button>
+                        </div>   
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/admin-lte/js/adminlte.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#login_user").validate({
+            rules: {
+                eventcode: {
+                    required: true,
+                    max20: true
+                },
+                eventpassword: {
+                    required: true,
+                    max20: true
+                }
+            },
+            submitHandler: function (form) {
+                var json = {
+                    'EventPassword': form.eventpassword.value,
+                    'EventCode': form.eventcode.value
+                };
+                $.ajax({
+                    url: '@Url.Action("Index", "Login")',
+                    method: 'POST',
+                    data: JSON.stringify(json),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    processData: false,
+                    success: function (data) {
+
+                        if (data.success) {
+
+                            $('#login_user')[0].reset();
+
+                            var linkHref = data.urllink;
+                            window.location.href = linkHref;
+                        }
+
+                        else {
+                            alert(data.message);
+                        }
+
+                    },
+                    error: function (data) {
+                        alert(data.message);
+                    }
+                });
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `help-block` class to the error element
+                error.addClass("help-block");
+                error.insertAfter(element);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-md-12").addClass("has-error");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parents(".col-md-12").removeClass("has-error");
+            },
+        });
+
+        jQuery.validator.addMethod("max20", function (value, element) {
+            return value.length < 15;
+        }, "Less than 20 characters allowed");
+    });
+
+</script>
