@@ -5,51 +5,58 @@
 }
 
 <style>
+
+    html{
+      height:100% !important;
+    }
+
     body {
-        background: -webkit-linear-gradient(bottom, #C11427, #D3112B);
+        background-image: url("../../admin-lte/img/plain-background.png");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        height: 100% !important;
     }
 
     .registration-form {
-        background: rgba(76, 175, 80, 0);
-        margin-top: 10%;
-        margin-bottom: 5%;
-        width: 70%;
         font-family: 'Roboto';
+        color: white;
+        width: 50%;
+        height: 30%;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
+    }
+
+    .registration-form .form-control {
+        border-color: white;
+        background: rgba(76, 175, 80, 0);
+        border-radius: 0em;
+        border-width: thin;
         color: white;
     }
 
-        .registration-form .form-control {
-            border-color: white;
-            background: rgba(76, 175, 80, 0);
-            border-radius: 0em;
-            border-width: thin;
-            color: white;
-        }
+    .registration-form form .row {
+        margin-bottom: 1%;
+    }
 
-        .registration-form form {
-            padding: 5%;
-        }
+    .registration-form h3 {
+        margin-bottom: 8%;
+        margin-top: -10%;
+        text-align: center;
+    }
 
-            .registration-form form .row {
-                margin-bottom: 1%;
-            }
-
-        .registration-form h3 {
-            margin-bottom: 8%;
-            margin-top: -10%;
-            text-align: center;
-        }
-
-        .registration-form .btnregistration {
-            width: 50%;
-            border: none;
-            border-radius: 1rem;
-            padding: 1.5%;
-            background: rgba(76, 175, 80, 0);
-            font-weight: 600;
-            color: #fff;
-            cursor: pointer;
-        }
+    .registration-form .btnregistration {
+        width: 50%;
+        border: none;
+        border-radius: 1rem;
+        padding: 1.5%;
+        background: rgba(76, 175, 80, 0);
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+    }
 
     .btnregistrationSubmit {
         width: 50%;
@@ -103,10 +110,10 @@
         box-shadow: 2px 1000px 1px #E0B066 inset;
     }
 
-        button.button:hover {
-            box-shadow: none;
-            color: #c90000;
-        }
+    button.button:hover {
+        box-shadow: none;
+        color: #c90000;
+    }
 
     .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
         color: white !important;
@@ -120,10 +127,10 @@
         border-width: medium;
     }
 
-        .has-error .form-control:focus {
-            border-color: #E0B066 !important;
-            border-width: medium;
-        }
+    .has-error .form-control:focus {
+        border-color: #E0B066 !important;
+        border-width: medium;
+    }
 
     select option {
         background: rgba(211, 17, 43, 1);
@@ -153,105 +160,124 @@
         box-shadow: 2px 1000px 1px #E0B066 inset;
     }
 
+    .Center-Container {
+        position: relative;
+        height: 100%;
+    }
+
+    .Absolute-Center {
+          width: 50%;
+          height: 50%;
+          overflow: auto;
+          margin: auto;
+          position: absolute;
+          top: 0; left: 0; bottom: 0; right: 0;
+          border: solid black;
+    }
+
 </style>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://adminlte.io/themes/AdminLTE/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 
-<div class="row" id="special">
-    <div class="row">
-        <a id="pig" href="@Url.Action("Logout", "Login")"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
-    </div>
-</div>
+<div class="Center-Container">
 
-<div class="container registration-form">
-
-    <div class="registration-image">
-        <img style="text-align: center" src="~/admin-lte/img/TitleImage.JPG" alt="title_image" />
+    <div class="row" id="special">
+        <div class="row">
+            <a id="pig" href="@Url.Action("Logout", "Login")"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
+        </div>
     </div>
 
-    <form id="register_user" method="post" class="form-horizontal" action="">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control " id="name" name="name" placeholder="Name" autocomplete="off" />
+    <div class="container registration-form">
+
+        <!-- <div class="registration-image">
+            <img style="text-align: center" src="~/admin-lte/img/TitleImage.JPG" alt="title_image" />
+        </div> -->
+
+        <form id="register_user" method="post" class="form-horizontal" action="">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control " id="name" name="name" placeholder="Name" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control " id="ic_number" name="ic_number" placeholder="IC No" autocomplete="off" />
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control " id="ic_number" name="ic_number" placeholder="IC No" autocomplete="off" />
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="email" class="form-control " id="emailaddress" name="emailaddress" placeholder="Email" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control " id="contactnumber" name="contactnumber" placeholder="Tel" autocomplete="off" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="email" class="form-control " id="emailaddress" name="emailaddress" placeholder="Email" autocomplete="off" />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.DropDownList("project", (IEnumerable<SelectListItem>)ViewBag.ProjectList, new { @class = "form-control", @style = "color: white" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control " id="block" name="block" placeholder="Block" autocomplete="off" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.DropDownList("level", new SelectList(ViewBag.FloorUnitList, "Text", "Value"), new { @class = "form-control", @style = "color: white" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.DropDownList("unit", new SelectList(ViewBag.FloorUnitList, "Text", "Value"), new { @class = "form-control", @style = "color: white" })
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control " id="contactnumber" name="contactnumber" placeholder="Tel" autocomplete="off" />
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control " id="salesconsultant" name="salesconsultant" placeholder="Sales Consultant Name" autocomplete="off" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.DropDownList("project", (IEnumerable<SelectListItem>)ViewBag.ProjectList, new { @class = "form-control", @style = "color: white" })
-                    </div>
+            <div class="row">
+                <div class="col-md-6" style="margin-top:20px;">
+                    <p style="color:white; font-size:medium;">@ViewBag.Date &emsp; @ViewBag.Time</p>
+                    <p style="color:white; font-size:medium;">@ViewBag.SalesLocation</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control " id="block" name="block" placeholder="Block" autocomplete="off" />
-                    </div>
-                </div>
+            <div class="row text-center">
+                <button class="button" id="submit_form" type="submit">SUBMIT</button>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.DropDownList("level", new SelectList(ViewBag.FloorUnitList, "Text", "Value"), new { @class = "form-control", @style = "color: white" })
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.DropDownList("unit", new SelectList(ViewBag.FloorUnitList, "Text", "Value"), new { @class = "form-control", @style = "color: white" })
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <input type="text" class="form-control " id="salesconsultant" name="salesconsultant" placeholder="Sales Consultant Name" autocomplete="off" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6" style="margin-top:20px;">
-                <p style="color:white; font-size:medium;">@ViewBag.Date &emsp; @ViewBag.Time</p>
-                <p style="color:white; font-size:medium;">@ViewBag.SalesLocation</p>
-            </div>
-        </div>
-        <div class="row text-center">
-            <button class="button" id="submit_form" type="submit">SUBMIT</button>
-        </div>
-    </form>
+        </form>
+    </div>
+
 </div>
 
 <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -83,13 +83,13 @@ namespace LuckyDrawApplication.Controllers
                 }
                 else
                 {
-                    int results = CreateNewUser(user, luckydrawevent.EventID);
+                    Tuple<int, int> results = CreateNewUser(user, luckydrawevent.EventID);
 
                     return Json(new
                     {
                         success = true,
                         draw = results,
-                        urllink = Url.Action("LuckyDrawAnimation", "Admin", new { name = user.Name.ToUpper(), prize = results }, "https"),
+                        urllink = Url.Action("LuckyDrawAnimation", "Home", new { id = results.Item1 }, "https"),
                         message = user.Name.ToUpper() + " has been registered successfully!"
                     }, JsonRequestBehavior.AllowGet);
                 }
@@ -188,7 +188,7 @@ namespace LuckyDrawApplication.Controllers
         }
 
         [HttpGet]
-        public ActionResult LuckyDrawAnimation(string name, int prize)
+        public ActionResult LuckyDrawAnimation(int id)
         {
             Models.Admin a_user = (Models.Admin)Session["admin"];
             Models.Event luckydrawevent = (Models.Event)Session["event"];
@@ -196,9 +196,12 @@ namespace LuckyDrawApplication.Controllers
             if (a_user == null || luckydrawevent == null)
                 return RedirectToAction("AdminIndex", "Login");
 
+
+            Models.User user = GetUser(id);
+
             ViewBag.Name = a_user.Name;
-            ViewBag.WinnerName = name;
-            ViewBag.WinnerPrize = prize;
+            ViewBag.WinnerName = user.Name;
+            ViewBag.WinnerPrize = user.PrizeWon;
 
             return View();
         }
@@ -411,14 +414,14 @@ namespace LuckyDrawApplication.Controllers
 
         // Register new user;
         [NonAction]
-        public int CreateNewUser(Models.User user, int eventCode)
+        public Tuple<int, int> CreateNewUser(Models.User user, int eventCode)
         {
             int last_inserted_id = 0;
             response_message = "";
 
             try
             {
-                MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+                MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
                 cn.Open();
 
                 MySqlCommand cmd = cn.CreateCommand();
@@ -474,13 +477,13 @@ namespace LuckyDrawApplication.Controllers
         }
 
         [NonAction]
-        public static int CheckForLuckyDraw(Models.User user, int last_inserted_id)
+        public static Tuple<int, int> CheckForLuckyDraw(Models.User user, int last_inserted_id)
         {
             string prizeCategory = "";
             int prizeCode = 0;
             int prizeAmount = 0;
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -505,12 +508,12 @@ namespace LuckyDrawApplication.Controllers
                 string[] prizes = prizeCategory.Split(',');
                 prizeAmount = Convert.ToInt32(prizes[prizeCode - 1]);
                 UpdateDatabaseWhenLuckyDrawIsWon(last_inserted_id, prizeCode);
-                return prizeAmount;
+                return new Tuple<int, int>(last_inserted_id, prizeAmount);
             }
 
             else
             {
-                return 0;
+                return new Tuple<int, int>(last_inserted_id, 0);
             }
         }
 
@@ -519,7 +522,7 @@ namespace LuckyDrawApplication.Controllers
         {
             Debug.WriteLine("Updating Database with PrizeCode: " + prizeCode);
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -539,7 +542,7 @@ namespace LuckyDrawApplication.Controllers
         {
             int count = 0;
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
             
             MySqlCommand cmd = cn.CreateCommand();
@@ -567,7 +570,7 @@ namespace LuckyDrawApplication.Controllers
         public static List<Models.User> GetUserList(int eventID)
         {
             List<Models.User> UserList = new List<Models.User>();
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -616,7 +619,7 @@ namespace LuckyDrawApplication.Controllers
         public static List<Models.User> GetWinnerList(int eventID)
         {
             List<Models.User> UserList = new List<Models.User>();
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -665,7 +668,7 @@ namespace LuckyDrawApplication.Controllers
         public static Models.User GetUser(int userID)
         {
             Models.User user = new Models.User();
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -713,7 +716,7 @@ namespace LuckyDrawApplication.Controllers
         {
             try
             {
-                MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+                MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
                 cn.Open();
 
                 MySqlCommand cmd = cn.CreateCommand();
@@ -748,7 +751,7 @@ namespace LuckyDrawApplication.Controllers
             Debug.WriteLine("Checking for duplicate" + user.PurchaserID + " projectID: " + user.ProjectID + "unit: " + user.Unit.ToUpper());
             int count = 0;
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -777,7 +780,7 @@ namespace LuckyDrawApplication.Controllers
         {
             List<SelectListItem> Projects = new List<SelectListItem>();
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -802,7 +805,7 @@ namespace LuckyDrawApplication.Controllers
         {
             List<Project> projectList = new List<Project>();
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -832,7 +835,7 @@ namespace LuckyDrawApplication.Controllers
         {
             List<Project> projectList = new List<Project>();
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -862,7 +865,7 @@ namespace LuckyDrawApplication.Controllers
         {
             Models.User user = new Models.User();
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -898,7 +901,7 @@ namespace LuckyDrawApplication.Controllers
         {
             try
             {
-                MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+                MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
                 cn.Open();
 
                 MySqlCommand cmd = cn.CreateCommand();

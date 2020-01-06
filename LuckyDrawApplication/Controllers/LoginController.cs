@@ -85,7 +85,7 @@ namespace LuckyDrawApplication.Controllers
             int eventID = 0;
             string eventLocation = "";
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
             MySqlCommand cmd = cn.CreateCommand();
             cmd.CommandType = CommandType.Text;
@@ -249,7 +249,7 @@ namespace LuckyDrawApplication.Controllers
             int UserID = 0;
             string name = "";
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
             MySqlCommand cmd = cn.CreateCommand();
             cmd.CommandType = CommandType.Text;
@@ -284,7 +284,7 @@ namespace LuckyDrawApplication.Controllers
         {
             Models.Event luckydrawevent = new Models.Event();
  
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
             MySqlCommand cmd = cn.CreateCommand();
             cmd.CommandType = CommandType.Text;
@@ -329,7 +329,7 @@ namespace LuckyDrawApplication.Controllers
             bool userExists = false, emailExists = false;
             String token = getSalt();
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -412,7 +412,7 @@ namespace LuckyDrawApplication.Controllers
         {
             bool tokenMatches = false;
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -464,7 +464,7 @@ namespace LuckyDrawApplication.Controllers
         {
             List<SelectListItem> Events = new List<SelectListItem>();
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();

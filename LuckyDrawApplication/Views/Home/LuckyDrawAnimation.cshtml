@@ -5,8 +5,19 @@
 }
 
 <style>
-    body {
-        background: -webkit-linear-gradient(bottom, #C11427, #D3112B);
+    
+    
+    html{
+      height:100% !important;
+    }
+
+     body {
+        background-image: url("../../admin-lte/img/plain-background.png");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        height: 100% !important;
     }
 
     #rebatesheader {
@@ -23,21 +34,14 @@
 
     .results-form {
         background: rgba(76, 175, 80, 0);
-        margin-top: 10%;
-        margin-bottom: 5%;
-        width: 70%;
         font-family: 'Roboto';
         color: white;
+        width: 50%;
+        height: 40%;
+        margin: auto;
+        position: absolute;
+        top: 0; left: 0; bottom: 0; right: 0;
     }
-
-    .registration-image {
-        text-align: center;
-    }
-
-        .registration-image img {
-            width: 50%;
-            margin-top: -6%;
-        }
 
     button.button {
         border-radius: 1rem;
@@ -55,10 +59,10 @@
         box-shadow: 2px 1000px 1px #E0B066 inset;
     }
 
-        button.button:hover {
-            box-shadow: none;
-            color: #c90000;
-        }
+    button.button:hover {
+        box-shadow: none;
+        color: #c90000;
+    }
 
     #special {
         top: 0;
@@ -116,37 +120,53 @@
         font-size: 20px;
         margin-top: 5px;
     }
+   
+    .Center-Container {
+        position: relative;
+        height: 100%;
+    }
+
+    .Absolute-Center {
+          width: 50%;
+          height: 50%;
+          overflow: auto;
+          margin: auto;
+          position: absolute;
+          top: 0; left: 0; bottom: 0; right: 0;
+          border: solid black;
+    }
+
 </style>
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 <link href="https://adminlte.io/themes/AdminLTE/bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
 
-<div class="row" id="special">
-    <div class="row">
-        <a id="pig" href="@Url.Action("Logout", "Login")"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
-    </div>
-</div>
+<div class="Center-Container">
 
-<div class="container results-form">
-
-    <div class="registration-image">
-        <img style="text-align: center" src="~/admin-lte/img/TitleImage.JPG" alt="title_image" />
-    </div>
-
-    <h1 id="rebatesheader">REWARDS AND REBATES UP TO</h1>
-
-    <div class="module-border-wrap text-center">
-        <div class="module" id="number">
-            <b>RM00, 000, 000</b>
+    <div class="row" id="special">
+        <div class="row">
+            <a id="pig" href="@Url.Action("Logout", "Login")"><span class="glyphicon glyphicon-log-out"></span>Log out</a>
         </div>
     </div>
 
-    <div class="row text-center">
-        <p id="press"><b>PRESS BUTTON TO DRAW</b></p>
-        <button class="button" id="submit_form">HUAT AH!</button>
-        <p style="" id="details"><b>@ViewBag.WinnerName</b></p>
-        <p id="details2"><b>DATE OF DRAW</b></p>
+    <div class="container results-form">
+
+        <h1 id="rebatesheader">REWARDS AND REBATES UP TO</h1>
+
+        <div class="module-border-wrap text-center">
+            <div class="module" id="number">
+                <b>RM00, 000, 000</b>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <p id="press"><b>PRESS BUTTON TO DRAW</b></p>
+            <button class="button" id="submit_form">HUAT AH!</button>
+            <p style="" id="details"><b>@ViewBag.WinnerName</b></p>
+            <p id="details2"><b>DATE OF DRAW</b></p>
+        </div>
     </div>
+
 </div>
 
 <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -158,24 +178,24 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function () {
+$(document).ready(function () {
 
-        var now = new Date();
-        var today = now.getDate()  + ' / ' + (now.getMonth() + 1) + ' / ' + now.getFullYear();
-        $('#details2').text(today);
+    var now = new Date();
+    var today = now.getDate()  + ' / ' + (now.getMonth() + 1) + ' / ' + now.getFullYear();
+    $('#details2').text(today);
 
 
-        $('#submit_form').click(function() {
-            $('#number').animate({
-                Counter: @ViewBag.WinnerPrize
-            }, {
-                duration: 1000,
-                easing: 'swing',
-                step: function (now) {
-                    $(this).text("RM" + Math.ceil(now) + ".00");
-                }
-            });
+    $('#submit_form').click(function() {
+        $('#number').animate({
+            Counter: @ViewBag.WinnerPrize
+        }, {
+            duration: 1000,
+            easing: 'swing',
+            step: function (now) {
+                $(this).text("RM" + Math.ceil(now) + ".00");
+            }
         });
     });
+});
 
 </script>

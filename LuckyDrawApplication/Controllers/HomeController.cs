@@ -46,9 +46,9 @@ namespace LuckyDrawApplication.Controllers
             if (luckydrawevent == null)
                 return RedirectToAction("Index", "Login");
 
-            if (user != null) 
+            if (user != null)
             {
-                if(DuplicateUserExists(user))
+                if (DuplicateUserExists(user))
                 {
                     return Json(new
                     {
@@ -59,13 +59,13 @@ namespace LuckyDrawApplication.Controllers
                 }
                 else
                 {
-                    int results = CreateNewUser(user, luckydrawevent.EventID);
-                 
+                    Tuple<int, int> results = CreateNewUser(user, luckydrawevent.EventID);
+
                     return Json(new
                     {
                         success = true,
                         draw = results,
-                        urllink = Url.Action("LuckyDrawAnimation", "Home", new { name = user.Name.ToUpper(), prize = results }, "https"),
+                        urllink = Url.Action("LuckyDrawAnimation", "Home", new { id = results.Item1 }, "https"),
                         message = user.Name.ToUpper() + " has been registered successfully!"
                     }, JsonRequestBehavior.AllowGet);
                 }
@@ -81,33 +81,35 @@ namespace LuckyDrawApplication.Controllers
                     message = user.Name.ToUpper() + " cannot be registered! Error: " + response_message
                 }, JsonRequestBehavior.AllowGet);
             }
-           
+
         }
 
         [HttpGet]
-        public ActionResult LuckyDrawAnimation(string name, int prize)
+        public ActionResult LuckyDrawAnimation(int id)
         {
             Models.Event luckydrawevent = (Models.Event)Session["event"];
 
             if (luckydrawevent == null)
                 return RedirectToAction("Index", "Login");
 
-            ViewBag.WinnerName = name;
-            ViewBag.WinnerPrize = prize;
+            Models.User user = GetUser(id);
+
+            ViewBag.WinnerName = user.Name;
+            ViewBag.WinnerPrize = user.PrizeWon;
 
             return View();
         }
 
         // Register new user;
         [NonAction]
-        public int CreateNewUser(Models.User user, int eventCode)
+        public Tuple<int, int> CreateNewUser(Models.User user, int eventCode)
         {
             int last_inserted_id = 0;
             response_message = "";
 
             try
             {
-                MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+                MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
                 cn.Open();
 
                 MySqlCommand cmd = cn.CreateCommand();
@@ -147,7 +149,7 @@ namespace LuckyDrawApplication.Controllers
                 cmd1.CommandType = CommandType.Text;
                 cmd1.CommandText = String.Format("UPDATE project SET NoOfProject= NoOfProject + 1 WHERE ProjectID = @projectID");
                 cmd1.Parameters.Add("@projectID", MySqlDbType.Int32).Value = user.ProjectID;
-              
+
                 MySqlDataReader rd1 = cmd1.ExecuteReader();
                 rd1.Close();
                 cmd1.Dispose();
@@ -163,13 +165,13 @@ namespace LuckyDrawApplication.Controllers
         }
 
         [NonAction]
-        public static int CheckForLuckyDraw(Models.User user, int last_inserted_id)
+        public static Tuple<int, int> CheckForLuckyDraw(Models.User user, int last_inserted_id)
         {
             string prizeCategory = "";
             int prizeCode = 0;
             int prizeAmount = 0;
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -194,12 +196,12 @@ namespace LuckyDrawApplication.Controllers
                 string[] prizes = prizeCategory.Split(',');
                 prizeAmount = Convert.ToInt32(prizes[prizeCode - 1]);
                 UpdateDatabaseWhenLuckyDrawIsWon(last_inserted_id, prizeCode);
-                return prizeAmount;
+                return new Tuple<int, int>(last_inserted_id, prizeAmount);
             }
 
             else
             {
-                return 0;
+                return new Tuple<int, int>(last_inserted_id, 0);
             }
         }
 
@@ -208,7 +210,7 @@ namespace LuckyDrawApplication.Controllers
         {
             Debug.WriteLine("Updating Database with PrizeCode: " + prizeCode);
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -228,9 +230,9 @@ namespace LuckyDrawApplication.Controllers
         {
             int count = 0;
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
-            
+
             MySqlCommand cmd = cn.CreateCommand();
             cmd.CommandType = CommandType.Text;
             cmd.CommandText = String.Format("SELECT COUNT(PurchaserID) AS userExists FROM user WHERE ProjectID = @project AND Unit = @unit");
@@ -256,7 +258,7 @@ namespace LuckyDrawApplication.Controllers
         {
             List<SelectListItem> Projects = new List<SelectListItem>();
 
-            MySqlConnection cn = new MySqlConnection(@"DataSource=103.6.199.135:3306;Initial Catalog=com12348_;User Id=luckywheel;Password=luckywheelrocks123@");
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
             cn.Open();
 
             MySqlCommand cmd = cn.CreateCommand();
@@ -266,7 +268,7 @@ namespace LuckyDrawApplication.Controllers
             MySqlDataReader rd = cmd.ExecuteReader();
             while (rd.Read())
             {
-                Projects.Add(new SelectListItem() { Text = rd["ProjectName"].ToString(), Value = Convert.ToInt32(rd["ProjectID"]).ToString()});
+                Projects.Add(new SelectListItem() { Text = rd["ProjectName"].ToString(), Value = Convert.ToInt32(rd["ProjectID"]).ToString() });
             }
             rd.Close();
             cmd.Dispose();
@@ -275,5 +277,53 @@ namespace LuckyDrawApplication.Controllers
 
             return Projects;
         }
+
+        // Get users list
+        [NonAction]
+        public static Models.User GetUser(int userID)
+        {
+            Models.User user = new Models.User();
+            MySqlConnection cn = new MySqlConnection(@"DataSource=localhost;Initial Catalog=luckydraw;User Id=root;Password=''");
+            cn.Open();
+
+            MySqlCommand cmd = cn.CreateCommand();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = String.Format("SELECT project.ProjectName, project.PrizeCategory, event.EventLocation, user.* FROM user INNER JOIN project on project.ProjectID = user.ProjectID INNER JOIN event ON event.EventID = user.EventID WHERE PurchaserID = @id");
+            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = userID;
+            MySqlDataReader rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                user.PurchaserID = Convert.ToInt32(rd["PurchaserID"].ToString());
+                user.Name = rd["Name"].ToString();
+                user.ICNumber = rd["ICNumber"].ToString();
+                user.EmailAddress = rd["EmailAddress"].ToString();
+                user.ContactNumber = rd["ContactNumber"].ToString();
+                user.EventID = Convert.ToInt32(rd["EventID"].ToString());
+                user.ProjectID = Convert.ToInt32(rd["ProjectID"].ToString());
+                user.ProjectName = rd["ProjectName"].ToString();
+                user.SalesLocation = rd["EventLocation"].ToString();
+                user.Unit = rd["Unit"].ToString();
+                user.SalesConsultant = rd["SalesConsultant"].ToString();
+
+                if (Convert.ToInt32(rd["PrizeWon"]) > 0)
+                {
+                    string[] prizes = rd["PrizeCategory"].ToString().Split(',');
+                    user.PrizeWon = Convert.ToInt32(prizes[Convert.ToInt32(rd["PrizeWon"]) - 1]);
+                }
+                else
+                {
+                    user.PrizeWon = 0;
+                }
+
+                user.DateTime = rd["DateTime"].ToString();
+            }
+
+            rd.Close();
+            cmd.Dispose();
+            cn.Close();
+
+            return user;
+        }
+
     }
 }
